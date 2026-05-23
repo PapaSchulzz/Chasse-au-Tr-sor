@@ -68,9 +68,10 @@ img.pixel,
 .winner-banner .trophy-icon { width: 1.2em; height: 1.2em; vertical-align: -0.2em; }
 .game-card .card-winner img.trophy-icon,
 .game-card .winner-label img.trophy-icon {
-  width: 1.1em;
-  height: 1.1em;
-  vertical-align: -0.2em;
+  width: 1.4em;
+  height: 1.4em;
+  vertical-align: middle;
+  margin: 0;
   background: none;
   border: none;
   padding: 0;
@@ -468,12 +469,15 @@ h3 {
 }
 
 .game-card .winner-label {
-  font-size: 0.7rem;
+  font-size: 0.95rem;
   color: var(--accent);
   text-transform: uppercase;
   letter-spacing: 1.3px;
   font-weight: 700;
-  margin-bottom: 0.15rem;
+  margin-bottom: 0.2rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
 }
 
 .game-card .card-mid {
