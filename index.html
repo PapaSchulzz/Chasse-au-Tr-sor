@@ -8,13 +8,17 @@
 </head>
 <body>
   <header>
-    <h1>⛏ Chasse au Trésor</h1>
+    <h1>
+      <img class="logo" src="https://raw.githubusercontent.com/PrismarineJS/minecraft-assets/master/data/1.21.8/items/gold_ingot.png" alt="" />
+      Chasse au Trésor
+    </h1>
     <p class="tagline">Historique des parties</p>
   </header>
 
   <main id="app">
     <section id="list-view">
-      <h2>Parties</h2>
+      <div id="stats-bar" class="stats-bar" hidden></div>
+      <h2>Parties <span id="games-count" class="count-badge"></span></h2>
       <div id="games-list" class="games-list">Chargement…</div>
     </section>
 
