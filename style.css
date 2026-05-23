@@ -314,6 +314,14 @@ header h1 .logo {
 
 .discord-btn:active { transform: translateY(0); }
 
+.discord-btn svg {
+  flex: 0 0 auto;
+  width: 24px;
+  height: 18px;
+  min-width: 24px;
+  display: block;
+}
+
 @media (max-width: 640px) {
   .server-card { padding: 1.2rem 1.1rem; }
   .server-card-head { gap: 0.5rem; }
