@@ -50,12 +50,14 @@ img.pixel,
 .found-list img,
 .player-cell img,
 .logo,
-.clock-icon {
+.clock-icon,
+.trophy-icon {
   image-rendering: pixelated;
   image-rendering: crisp-edges;
 }
 
-.clock-icon {
+.clock-icon,
+.trophy-icon {
   width: 1em;
   height: 1em;
   vertical-align: -0.12em;
@@ -63,6 +65,8 @@ img.pixel,
 }
 
 .game-card .duration .clock-icon { width: 1.15em; height: 1.15em; vertical-align: -0.18em; }
+.winner-banner .trophy-icon { width: 1.2em; height: 1.2em; vertical-align: -0.2em; }
+.card-winner .trophy-icon { width: 1.1em; height: 1.1em; vertical-align: -0.18em; }
 
 /* === HEADER === */
 header {

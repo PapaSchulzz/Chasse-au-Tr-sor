@@ -88,7 +88,7 @@ function renderList(games) {
       <div class="card-winner">
         <img src="${skinUrl(g.winner)}" alt="" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/64'" />
         <div>
-          <div class="winner-label">🏆 Gagnant</div>
+          <div class="winner-label"><img src="trophy.gif" class="trophy-icon" alt="" /> Gagnant</div>
           <div class="winner-name">${escapeHtml(g.winner)}</div>
         </div>
       </div>
@@ -145,7 +145,7 @@ function renderDetail(g) {
         <td>
           <div class="player-cell">
             <img src="${skinUrl(p.name)}" alt="" onerror="this.style.visibility='hidden'" />
-            <span>${p.winner ? '🏆 ' : ''}${escapeHtml(p.name)}</span>
+            <span>${p.winner ? '<img src="trophy.gif" class="trophy-icon" alt="" /> ' : ''}${escapeHtml(p.name)}</span>
           </div>
         </td>
         <td>${p.found.length} / ${g.items.length}</td>
@@ -158,7 +158,7 @@ function renderDetail(g) {
     <div class="detail-header">
       <h2>Chasse du ${escapeHtml(formatDate(g.start))}</h2>
       <div class="meta">Durée : <img src="clock.gif" class="clock-icon" alt="" /> ${formatDuration(g.durationMs)} · ${g.items.length} items · ${g.players.length} joueur(s)</div>
-      <div class="winner-banner">🏆 Gagnant : <span class="name">${escapeHtml(g.winner)}</span></div>
+      <div class="winner-banner"><img src="trophy.gif" class="trophy-icon" alt="" /> Gagnant : <span class="name">${escapeHtml(g.winner)}</span></div>
     </div>
 
     <h3>Items à trouver</h3>
