@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chasse au Trésor — Historique</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>⛏ Chasse au Trésor</h1>
+    <p class="tagline">Historique des parties</p>
+  </header>
+
+  <main id="app">
+    <section id="list-view">
+      <h2>Parties</h2>
+      <div id="games-list" class="games-list">Chargement…</div>
+    </section>
+
+    <section id="detail-view" hidden>
+      <button id="back-btn" class="back-btn">← Retour</button>
+      <div id="game-detail"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Données mises à jour automatiquement depuis le serveur Minecraft.</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
