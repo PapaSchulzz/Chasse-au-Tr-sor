@@ -1,8 +1,14 @@
 const DATA_BASE = 'data';
-const ITEM_IMG_BASE = 'https://raw.githubusercontent.com/PrismarineJS/minecraft-assets/master/data/1.20/items';
+const ITEM_IMG_BASE = 'https://raw.githubusercontent.com/PrismarineJS/minecraft-assets/master/data/1.21.8';
 
 function itemImageUrl(materialName) {
-  return `${ITEM_IMG_BASE}/${materialName.toLowerCase()}.png`;
+  const name = materialName.toLowerCase();
+  // On essaie d'abord items/, le onerror inline bascule vers blocks/ si absent.
+  return `${ITEM_IMG_BASE}/items/${name}.png`;
+}
+
+function itemImageFallback(materialName) {
+  return `${ITEM_IMG_BASE}/blocks/${materialName.toLowerCase()}.png`;
 }
 
 function skinUrl(uuid) {
@@ -83,7 +89,7 @@ async function showDetail(id) {
 function renderDetail(g) {
   const itemsHtml = g.items.map(i => `
     <div class="item-card">
-      <img src="${itemImageUrl(i)}" alt="${escapeHtml(i)}" onerror="this.style.display='none'" />
+      <img src="${itemImageUrl(i)}" alt="${escapeHtml(i)}" data-fallback="${itemImageFallback(i)}" onerror="if(this.dataset.fallback){this.src=this.dataset.fallback;this.dataset.fallback='';}else{this.style.display='none';}" />
       <div class="name">${escapeHtml(prettyItem(i))}</div>
     </div>
   `).join('');
@@ -97,7 +103,7 @@ function renderDetail(g) {
     const foundSet = new Set(p.found);
     const itemsCellHtml = g.items.map(i => {
       const got = foundSet.has(i);
-      return `<img src="${itemImageUrl(i)}" alt="${escapeHtml(i)}" title="${escapeHtml(prettyItem(i))}${got ? '' : ' (manquant)'}" class="${got ? '' : 'missing'}" onerror="this.style.opacity=0" />`;
+      return `<img src="${itemImageUrl(i)}" alt="${escapeHtml(i)}" title="${escapeHtml(prettyItem(i))}${got ? '' : ' (manquant)'}" class="${got ? '' : 'missing'}" data-fallback="${itemImageFallback(i)}" onerror="if(this.dataset.fallback){this.src=this.dataset.fallback;this.dataset.fallback='';}else{this.style.opacity=0;}" />`;
     }).join('');
     return `
       <tr class="${p.winner ? 'winner-row' : ''}">
