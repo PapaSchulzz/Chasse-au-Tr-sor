@@ -98,7 +98,7 @@ function renderList(games) {
         ${g.items ? `<div class="card-items">${g.items.slice(0, 12).map(i => `<img src="${itemImageUrl(i)}" alt="${escapeHtml(i)}" title="${escapeHtml(prettyItem(i))}" data-fallback="${itemImageFallback(i)}" onerror="if(this.dataset.fallback){this.src=this.dataset.fallback;this.dataset.fallback='';}else{this.style.display='none';}" />`).join('')}${g.items.length > 12 ? `<span class="meta">+${g.items.length - 12}</span>` : ''}</div>` : ''}
       </div>
       <div class="card-right">
-        <div class="duration">⏱ ${formatDuration(g.durationMs)}</div>
+        <div class="duration"><img src="clock.gif" class="clock-icon" alt="" /> ${formatDuration(g.durationMs)}</div>
         <div class="meta">Voir détails →</div>
       </div>
     `;
@@ -157,7 +157,7 @@ function renderDetail(g) {
   return `
     <div class="detail-header">
       <h2>Chasse du ${escapeHtml(formatDate(g.start))}</h2>
-      <div class="meta">Durée : ⏱ ${formatDuration(g.durationMs)} · ${g.items.length} items · ${g.players.length} joueur(s)</div>
+      <div class="meta">Durée : <img src="clock.gif" class="clock-icon" alt="" /> ${formatDuration(g.durationMs)} · ${g.items.length} items · ${g.players.length} joueur(s)</div>
       <div class="winner-banner">🏆 Gagnant : <span class="name">${escapeHtml(g.winner)}</span></div>
     </div>
 
