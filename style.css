@@ -49,10 +49,20 @@ img.pixel,
 .item-card img,
 .found-list img,
 .player-cell img,
-.logo {
+.logo,
+.clock-icon {
   image-rendering: pixelated;
   image-rendering: crisp-edges;
 }
+
+.clock-icon {
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.12em;
+  margin-right: 0.15em;
+}
+
+.game-card .duration .clock-icon { width: 1.15em; height: 1.15em; vertical-align: -0.18em; }
 
 /* === HEADER === */
 header {
