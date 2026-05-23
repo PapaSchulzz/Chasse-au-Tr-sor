@@ -1,84 +1,62 @@
 :root {
-  /* Palette inspirée des GUI Minecraft */
+  /* Palette Minecraft */
   --mc-bg: #1a1a1f;
   --mc-stone: #6e6e6e;
-  --mc-stone-dark: #3f3f3f;
-  --mc-slot-bg: #8b8b8b;
-  --mc-slot-shadow: #373737;
-  --mc-slot-highlight: #ffffff;
-  --mc-slot-inner: #8b8b8b;
-  --mc-panel: #c6c6c6;
-  --mc-panel-shadow: #555555;
-  --mc-panel-highlight: #ffffff;
-  --mc-text: #ffffff;
-  --mc-text-shadow: #3f3f3f;
+  --mc-stone-dark: #2d2d33;
+  --mc-slot-bg: #4a4a52;
+  --mc-slot-bg-2: #3a3a42;
+  --mc-slot-shadow: #1f1f25;
+  --mc-slot-highlight: #7a7a82;
+  --mc-panel: #2a2a32;
+  --mc-text: #f2f2f7;
+  --mc-text-dim: #b0b0bc;
+  --mc-text-shadow: rgba(0, 0, 0, 0.7);
   --mc-gold: #ffaa00;
-  --mc-gold-shadow: #3f2a00;
-  --mc-yellow: #ffff55;
-  --mc-yellow-shadow: #3f3f15;
-  --mc-aqua: #55ffff;
-  --mc-aqua-shadow: #153f3f;
-  --mc-green: #55ff55;
-  --mc-green-shadow: #153f15;
-  --mc-red: #ff5555;
-  --mc-gray: #aaaaaa;
-  --mc-dark-gray: #555555;
+  --mc-yellow: #ffd84d;
+  --mc-aqua: #5ad1ff;
+  --mc-green: #6ad36a;
+  --mc-red: #ff6b6b;
 
-  --pixel-font: 'VT323', 'Courier New', monospace;
-  --pixel-title: 'Press Start 2P', 'VT323', 'Courier New', monospace;
+  --body-font: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --pixel-font: 'Jersey 10', 'Inter', sans-serif;
 }
 
 * { box-sizing: border-box; }
 
-html, body {
-  margin: 0;
-  padding: 0;
-  min-height: 100%;
-}
+html, body { margin: 0; padding: 0; min-height: 100%; }
 
 body {
-  font-family: var(--pixel-font);
-  font-size: 20px;
-  background-color: #1a1a1f;
-  /* Texture pierre de Minecraft, tile petit */
+  font-family: var(--body-font);
+  font-size: 15px;
+  background-color: var(--mc-bg);
   background-image: url('https://raw.githubusercontent.com/PrismarineJS/minecraft-assets/master/data/1.21.8/blocks/stone.png');
   background-repeat: repeat;
   background-size: 48px 48px;
-  image-rendering: pixelated;
   color: var(--mc-text);
-  line-height: 1.3;
-  text-shadow: 2px 2px 0 var(--mc-text-shadow);
-  /* Désactive le lissage pour un rendu pixel net */
-  -webkit-font-smoothing: none;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-smooth: never;
 }
 
-/* Voile assombri par-dessus la pierre pour la lisibilité */
 body::before {
   content: '';
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.55);
+  background: rgba(15, 15, 20, 0.78);
   z-index: -1;
   pointer-events: none;
 }
 
-/* Tous les boutons / cartes pixelisées */
-img {
-  image-rendering: pixelated;
-  image-rendering: crisp-edges;
-}
+img { image-rendering: pixelated; image-rendering: crisp-edges; }
 
-/* === Header avec bandeau de planches en bois === */
+/* === HEADER === */
 header {
   background-image: url('https://raw.githubusercontent.com/PrismarineJS/minecraft-assets/master/data/1.21.8/blocks/oak_planks.png');
   background-repeat: repeat;
   background-size: 64px 64px;
-  image-rendering: pixelated;
   padding: 3rem 1rem 2.5rem;
   text-align: center;
-  border-bottom: 4px solid #3a2a0e;
+  border-bottom: 3px solid #2a1d09;
   box-shadow: 0 4px 0 rgba(0, 0, 0, 0.4);
   position: relative;
 }
@@ -87,83 +65,82 @@ header::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(0,0,0,0.15), rgba(0,0,0,0.45));
+  background: linear-gradient(180deg, rgba(0,0,0,0.25), rgba(0,0,0,0.55));
   pointer-events: none;
 }
 
 header > * { position: relative; }
 
-/* Plaque sombre type panneau MC derrière le titre */
 .title-plaque {
   display: inline-block;
-  background: rgba(0, 0, 0, 0.78);
-  border: 3px solid;
-  border-color: #888 #1a1a1a #1a1a1a #888;
+  background: rgba(15, 15, 20, 0.88);
+  border: 2px solid var(--mc-slot-highlight);
   box-shadow:
-    inset 2px 2px 0 rgba(255, 255, 255, 0.1),
-    inset -2px -2px 0 rgba(0, 0, 0, 0.5),
-    0 6px 0 rgba(0, 0, 0, 0.4);
-  padding: 1rem 2rem 0.8rem;
+    0 0 0 2px var(--mc-slot-shadow),
+    0 8px 0 rgba(0, 0, 0, 0.45),
+    inset 0 0 30px rgba(255, 170, 0, 0.08);
+  padding: 1.2rem 2.5rem 1rem;
+  border-radius: 2px;
 }
 
 header h1 {
   margin: 0;
-  font-family: var(--pixel-title);
+  font-family: var(--pixel-font);
   color: var(--mc-yellow);
-  font-size: 1.8rem;
-  font-weight: normal;
+  font-size: 3rem;
+  font-weight: 400;
   display: inline-flex;
   align-items: center;
-  gap: 0.8rem;
-  text-shadow: 3px 3px 0 var(--mc-yellow-shadow);
+  gap: 0.7rem;
   letter-spacing: 1px;
-  line-height: 1.1;
+  line-height: 1;
+  text-shadow: 0 3px 0 rgba(180, 100, 0, 0.6), 0 0 24px rgba(255, 216, 77, 0.35);
 }
 
 header h1 .logo {
-  width: 1.4em;
-  height: 1.4em;
+  width: 1.1em;
+  height: 1.1em;
   object-fit: contain;
-  filter: drop-shadow(2px 2px 0 rgba(0, 0, 0, 0.7));
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.6));
 }
 
 .tagline {
-  margin: 1rem 0 0;
-  color: #cccccc;
-  font-size: 1.4rem;
-  text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.9);
-  background: rgba(0, 0, 0, 0.55);
-  display: inline-block;
-  padding: 0.2rem 0.8rem;
+  margin: 1.2rem 0 0;
+  color: #d4d4d8;
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
 }
 
 main {
   max-width: 1100px;
   margin: 0 auto;
-  padding: 2rem 1rem 3rem;
+  padding: 2.5rem 1rem 3rem;
 }
 
 h2 {
-  font-family: var(--pixel-title);
+  font-family: var(--pixel-font);
   color: var(--mc-yellow);
-  font-size: 1.1rem;
-  font-weight: normal;
+  font-size: 2.2rem;
+  font-weight: 400;
   margin: 0 0 1.2rem;
-  text-shadow: 2px 2px 0 var(--mc-yellow-shadow);
   letter-spacing: 1px;
+  line-height: 1;
 }
 
 h3 {
-  font-family: var(--pixel-title);
+  font-family: var(--pixel-font);
   color: var(--mc-gold);
-  font-size: 0.95rem;
-  font-weight: normal;
-  margin: 1.5rem 0 0.8rem;
-  text-shadow: 2px 2px 0 var(--mc-gold-shadow);
-  letter-spacing: 1px;
+  font-size: 1.7rem;
+  font-weight: 400;
+  margin: 1.8rem 0 0.8rem;
+  letter-spacing: 0.5px;
+  line-height: 1;
 }
 
-/* === "Slot" d'inventaire Minecraft : bordure biseautée === */
+/* === Slot type inventaire MC, version sombre moderne === */
 .mc-slot,
 .stat-card,
 .game-card,
@@ -171,88 +148,88 @@ h3 {
 .item-card,
 .winner-banner,
 .players-table {
-  background: var(--mc-slot-inner);
-  border: 2px solid;
-  border-color: var(--mc-slot-highlight) var(--mc-slot-shadow) var(--mc-slot-shadow) var(--mc-slot-highlight);
+  background: linear-gradient(180deg, var(--mc-slot-bg), var(--mc-slot-bg-2));
+  border: 1px solid var(--mc-slot-highlight);
   box-shadow:
-    inset 2px 2px 0 rgba(255, 255, 255, 0.15),
-    inset -2px -2px 0 rgba(0, 0, 0, 0.25);
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 2px 0 var(--mc-slot-shadow),
+    0 4px 12px rgba(0, 0, 0, 0.4);
   color: var(--mc-text);
+  border-radius: 3px;
 }
 
-/* === Stats globales (rangée d'inventaire) === */
+/* === Stats === */
 .stats-bar {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 0.6rem;
+  gap: 0.7rem;
   margin-bottom: 2rem;
 }
 
 .stat-card {
-  padding: 1rem;
+  padding: 1.1rem 1rem;
   text-align: center;
-  background-color: #5a5a5a;
 }
 
 .stat-card .value {
-  font-family: var(--pixel-title);
-  font-size: 1rem;
-  font-weight: normal;
+  font-family: var(--pixel-font);
+  font-size: 2.2rem;
+  font-weight: 400;
   color: var(--mc-yellow);
-  text-shadow: 2px 2px 0 var(--mc-yellow-shadow);
-  line-height: 1.3;
+  line-height: 1;
   word-break: break-word;
+  letter-spacing: 0.5px;
 }
 
 .stat-card .label {
   margin-top: 0.6rem;
-  color: #e0e0e0;
-  font-size: 1.05rem;
+  color: var(--mc-text-dim);
+  font-size: 0.7rem;
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 1px;
-  text-shadow: 2px 2px 0 var(--mc-text-shadow);
+  letter-spacing: 1.5px;
 }
 
 .count-badge {
   display: inline-block;
   background: var(--mc-stone-dark);
-  border: 2px solid;
-  border-color: var(--mc-slot-shadow) var(--mc-slot-highlight) var(--mc-slot-highlight) var(--mc-slot-shadow);
+  border: 1px solid var(--mc-slot-shadow);
   color: var(--mc-yellow);
-  font-size: 0.95rem;
-  padding: 0.05rem 0.6rem;
+  font-family: var(--pixel-font);
+  font-size: 1.3rem;
+  padding: 0.05rem 0.7rem;
   vertical-align: middle;
-  margin-left: 0.5rem;
-  text-shadow: 2px 2px 0 var(--mc-yellow-shadow);
+  margin-left: 0.6rem;
+  border-radius: 3px;
+  line-height: 1.1;
 }
 
-/* === Liste des parties === */
+/* === Liste === */
 .games-list {
   display: grid;
-  gap: 0.7rem;
+  gap: 0.6rem;
 }
 
 .game-card {
-  padding: 1rem 1.2rem;
+  padding: 1rem 1.3rem;
   cursor: pointer;
-  transition: transform 0.05s ease, filter 0.1s ease;
+  transition: transform 0.08s ease, border-color 0.15s ease, box-shadow 0.15s ease;
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: center;
-  gap: 1.2rem;
-  background-color: #5a5a5a;
+  gap: 1.3rem;
 }
 
 .game-card:hover {
-  filter: brightness(1.15);
+  border-color: var(--mc-yellow);
   transform: translateY(-2px);
-  border-color: var(--mc-yellow) var(--mc-yellow-shadow) var(--mc-yellow-shadow) var(--mc-yellow);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    0 2px 0 var(--mc-slot-shadow),
+    0 8px 20px rgba(255, 170, 0, 0.18);
 }
 
-.game-card:active {
-  transform: translateY(0);
-  filter: brightness(0.95);
-}
+.game-card:active { transform: translateY(0); }
 
 .game-card .card-winner {
   display: flex;
@@ -263,27 +240,27 @@ h3 {
 .game-card .card-winner img {
   width: 52px;
   height: 52px;
-  border: 2px solid;
-  border-color: var(--mc-slot-shadow) var(--mc-slot-highlight) var(--mc-slot-highlight) var(--mc-slot-shadow);
+  border: 2px solid var(--mc-stone-dark);
   background: var(--mc-stone-dark);
+  border-radius: 3px;
 }
 
 .game-card .winner-name {
-  font-family: var(--pixel-title);
-  font-weight: normal;
+  font-family: var(--pixel-font);
+  font-weight: 400;
   color: var(--mc-yellow);
-  font-size: 0.95rem;
-  text-shadow: 2px 2px 0 var(--mc-yellow-shadow);
-  line-height: 1.3;
-  margin-top: 0.2rem;
+  font-size: 1.7rem;
+  line-height: 1;
+  margin-top: 0.15rem;
+  letter-spacing: 0.5px;
 }
 
 .game-card .winner-label {
-  font-size: 0.85rem;
+  font-size: 0.7rem;
   color: var(--mc-gold);
   text-transform: uppercase;
-  letter-spacing: 1px;
-  text-shadow: 2px 2px 0 var(--mc-gold-shadow);
+  letter-spacing: 1.5px;
+  font-weight: 600;
 }
 
 .game-card .card-mid { min-width: 0; }
@@ -296,12 +273,12 @@ h3 {
 }
 
 .game-card .card-items img {
-  width: 32px;
-  height: 32px;
+  width: 30px;
+  height: 30px;
   background: var(--mc-stone-dark);
-  border: 2px solid;
-  border-color: var(--mc-slot-shadow) var(--mc-slot-highlight) var(--mc-slot-highlight) var(--mc-slot-shadow);
+  border: 1px solid var(--mc-slot-shadow);
   padding: 2px;
+  border-radius: 2px;
 }
 
 .game-card .card-right {
@@ -312,30 +289,29 @@ h3 {
 }
 
 .game-card .meta {
-  color: #d4d4d4;
-  font-size: 0.95rem;
-  text-shadow: 2px 2px 0 var(--mc-text-shadow);
+  color: var(--mc-text-dim);
+  font-size: 0.85rem;
 }
 
 .game-card .duration {
-  font-size: 1.4rem;
-  font-weight: 700;
+  font-family: var(--pixel-font);
+  font-size: 1.9rem;
+  font-weight: 400;
   color: var(--mc-aqua);
   font-variant-numeric: tabular-nums;
-  text-shadow: 2px 2px 0 var(--mc-aqua-shadow);
+  line-height: 1;
+  letter-spacing: 0.5px;
 }
 
 .game-card .date {
   color: var(--mc-aqua);
-  font-size: 1.05rem;
+  font-size: 0.95rem;
   font-weight: 600;
-  text-shadow: 2px 2px 0 var(--mc-aqua-shadow);
+  letter-spacing: 0.3px;
 }
 
 @media (max-width: 640px) {
-  .game-card {
-    grid-template-columns: 1fr;
-  }
+  .game-card { grid-template-columns: 1fr; }
   .game-card .card-right {
     text-align: left;
     flex-direction: row;
@@ -344,85 +320,92 @@ h3 {
   }
 }
 
-/* === Bouton retour façon bouton Minecraft === */
+/* === Bouton retour === */
 .back-btn {
-  background: var(--mc-panel);
+  background: linear-gradient(180deg, var(--mc-slot-bg), var(--mc-slot-bg-2));
   color: var(--mc-text);
-  font-family: var(--pixel-font);
-  font-size: 1.1rem;
+  font-family: var(--body-font);
+  font-size: 0.95rem;
   font-weight: 600;
-  border: 2px solid;
-  border-color: var(--mc-panel-highlight) #555555 #555555 var(--mc-panel-highlight);
-  box-shadow: inset 2px 2px 0 rgba(255,255,255,0.4), inset -2px -2px 0 rgba(0,0,0,0.3);
-  padding: 0.55rem 1.4rem;
+  border: 1px solid var(--mc-slot-highlight);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 2px 0 var(--mc-slot-shadow);
+  padding: 0.55rem 1.5rem;
   cursor: pointer;
   margin-bottom: 1.2rem;
-  text-shadow: 2px 2px 0 var(--mc-text-shadow);
-  transition: filter 0.08s ease;
+  border-radius: 3px;
+  transition: all 0.1s ease;
+  letter-spacing: 0.5px;
 }
 
 .back-btn:hover {
-  filter: brightness(1.15);
-  border-color: var(--mc-yellow) #555555 #555555 var(--mc-yellow);
+  border-color: var(--mc-yellow);
+  color: var(--mc-yellow);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    0 2px 0 var(--mc-slot-shadow),
+    0 4px 12px rgba(255, 170, 0, 0.2);
 }
 
 .back-btn:active {
-  filter: brightness(0.9);
+  transform: translateY(1px);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
-/* === Page de détail === */
+/* === Détail === */
 .detail-header {
-  background-color: #5a5a5a;
-  padding: 1.4rem;
+  padding: 1.4rem 1.6rem;
   margin-bottom: 1.5rem;
 }
 
-.detail-header h2 {
-  margin: 0 0 0.5rem;
-}
+.detail-header h2 { margin: 0 0 0.6rem; }
 
 .winner-banner {
-  background-color: #4a3a10;
-  border-color: var(--mc-yellow) var(--mc-yellow-shadow) var(--mc-yellow-shadow) var(--mc-yellow);
+  background: linear-gradient(180deg, rgba(255, 170, 0, 0.15), rgba(255, 170, 0, 0.05));
+  border: 1px solid var(--mc-yellow);
   padding: 0.9rem 1.2rem;
   margin: 1rem 0;
-  font-size: 1.2rem;
-  text-shadow: 2px 2px 0 var(--mc-text-shadow);
+  font-size: 1rem;
+  font-weight: 500;
 }
 
 .winner-banner .name {
+  font-family: var(--pixel-font);
   color: var(--mc-yellow);
-  font-weight: 700;
-  text-shadow: 2px 2px 0 var(--mc-yellow-shadow);
+  font-weight: 400;
+  font-size: 1.7rem;
+  letter-spacing: 0.5px;
+  vertical-align: middle;
+  margin-left: 0.3rem;
 }
 
 .items-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
-  gap: 0.6rem;
+  gap: 0.7rem;
   margin: 1rem 0;
 }
 
 .item-card {
-  background-color: #5a5a5a;
-  padding: 0.7rem 0.4rem;
+  padding: 0.8rem 0.4rem;
   text-align: center;
 }
 
 .item-card img {
   width: 48px;
   height: 48px;
-  margin-bottom: 0.4rem;
+  margin-bottom: 0.5rem;
   background: var(--mc-stone-dark);
-  border: 2px solid;
-  border-color: var(--mc-slot-shadow) var(--mc-slot-highlight) var(--mc-slot-highlight) var(--mc-slot-shadow);
-  padding: 2px;
+  border: 1px solid var(--mc-slot-shadow);
+  padding: 4px;
+  border-radius: 3px;
 }
 
 .item-card .name {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   color: var(--mc-aqua);
-  text-shadow: 2px 2px 0 var(--mc-aqua-shadow);
+  font-weight: 500;
 }
 
 .players-table {
@@ -430,48 +413,47 @@ h3 {
   border-collapse: separate;
   border-spacing: 0;
   margin-top: 1rem;
-  background-color: #5a5a5a;
+  overflow: hidden;
 }
 
 .players-table th,
 .players-table td {
   text-align: left;
-  padding: 0.7rem 0.9rem;
+  padding: 0.8rem 1rem;
   border-bottom: 1px solid rgba(0, 0, 0, 0.3);
 }
 
 .players-table th {
-  color: var(--mc-yellow);
-  font-weight: 700;
-  background: rgba(0, 0, 0, 0.25);
+  color: var(--mc-gold);
+  font-weight: 600;
+  background: rgba(0, 0, 0, 0.3);
   text-transform: uppercase;
-  letter-spacing: 1px;
-  font-size: 0.9rem;
-  text-shadow: 2px 2px 0 var(--mc-yellow-shadow);
+  letter-spacing: 1.2px;
+  font-size: 0.75rem;
 }
 
 .players-table tr.winner-row {
-  background: rgba(255, 170, 0, 0.18);
+  background: rgba(255, 170, 0, 0.12);
 }
 
 .players-table tr.winner-row td:first-child {
   color: var(--mc-yellow);
-  text-shadow: 2px 2px 0 var(--mc-yellow-shadow);
 }
 
 .player-cell {
   display: flex;
   align-items: center;
   gap: 0.7rem;
-  font-size: 1.05rem;
+  font-size: 0.95rem;
+  font-weight: 500;
 }
 
 .player-cell img {
   width: 36px;
   height: 36px;
-  border: 2px solid;
-  border-color: var(--mc-slot-shadow) var(--mc-slot-highlight) var(--mc-slot-highlight) var(--mc-slot-shadow);
+  border: 1px solid var(--mc-slot-shadow);
   background: var(--mc-stone-dark);
+  border-radius: 3px;
 }
 
 .found-list {
@@ -484,9 +466,9 @@ h3 {
   width: 30px;
   height: 30px;
   background: var(--mc-stone-dark);
-  border: 2px solid;
-  border-color: var(--mc-slot-shadow) var(--mc-slot-highlight) var(--mc-slot-highlight) var(--mc-slot-shadow);
+  border: 1px solid var(--mc-slot-shadow);
   padding: 1px;
+  border-radius: 2px;
 }
 
 .found-list img.missing {
@@ -496,18 +478,16 @@ h3 {
 
 .empty {
   text-align: center;
-  color: var(--mc-gray);
+  color: var(--mc-text-dim);
   padding: 3rem 1rem;
-  font-size: 1.2rem;
-  text-shadow: 2px 2px 0 var(--mc-text-shadow);
+  font-size: 1rem;
 }
 
 footer {
   text-align: center;
-  color: var(--mc-gray);
-  font-size: 1rem;
+  color: var(--mc-text-dim);
+  font-size: 0.85rem;
   padding: 1.5rem;
-  border-top: 4px solid var(--mc-stone-dark);
-  background: rgba(0, 0, 0, 0.45);
-  text-shadow: 2px 2px 0 var(--mc-text-shadow);
+  border-top: 3px solid var(--mc-stone-dark);
+  background: rgba(0, 0, 0, 0.55);
 }
