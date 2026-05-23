@@ -1,5 +1,4 @@
 [
   {"id": "2026-05-23_04-51-04", "start": "2026-05-23T02:51:04.255Z", "durationMs": 7803, "winner": "Papa_Schulz", "winnerUuid": "ee8f5d97-204e-4fb9-9759-531c7b43f989", "itemCount": 1, "items": ["APPLE"], "playerCount": 1},
-  {"id": "2026-05-23_04-47-52", "start": "2026-05-23T02:47:52.505Z", "durationMs": 17702, "winner": "Papa_Schulz", "winnerUuid": "ee8f5d97-204e-4fb9-9759-531c7b43f989", "itemCount": 3, "items": ["AMETHYST_SHARD", "GOLDEN_APPLE", "PUFFERFISH"], "playerCount": 1},
-  {"id": "2026-05-23_04-14-54", "start": "2026-05-23T02:14:54.124Z", "durationMs": 6355, "winner": "Papa_Schulz", "itemCount": 1, "playerCount": 1}
+  {"id": "2026-05-23_04-47-52", "start": "2026-05-23T02:47:52.505Z", "durationMs": 17702, "winner": "Papa_Schulz", "winnerUuid": "ee8f5d97-204e-4fb9-9759-531c7b43f989", "itemCount": 3, "items": ["AMETHYST_SHARD", "GOLDEN_APPLE", "PUFFERFISH"], "playerCount": 1}
 ]
