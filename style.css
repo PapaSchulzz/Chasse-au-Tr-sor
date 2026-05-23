@@ -76,7 +76,6 @@ header {
 
 header h1 {
   margin: 0;
-  color: var(--accent);
   font-size: 2.4rem;
   font-weight: 700;
   letter-spacing: -0.5px;
@@ -86,11 +85,51 @@ header h1 {
   line-height: 1.05;
 }
 
+/* Texte du titre : dégradé doré avec balayage brillant en boucle */
+.title-text {
+  background: linear-gradient(
+    100deg,
+    var(--accent) 0%,
+    var(--accent) 38%,
+    #fff2c4 50%,
+    var(--accent) 62%,
+    var(--accent) 100%
+  );
+  background-size: 250% 100%;
+  background-position: 100% center;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 4.5s ease-in-out infinite;
+  filter: drop-shadow(0 0 10px rgba(245, 177, 51, 0.25));
+}
+
+@keyframes shimmer {
+  0%   { background-position: 200% center; }
+  100% { background-position: -100% center; }
+}
+
 header h1 .logo {
   width: 1.3em;
   height: 1.3em;
   object-fit: contain;
-  filter: drop-shadow(0 4px 12px rgba(245, 177, 51, 0.35));
+  animation: logo-pulse 4.5s ease-in-out infinite;
+}
+
+@keyframes logo-pulse {
+  0%, 100% {
+    filter:
+      drop-shadow(0 3px 8px rgba(245, 177, 51, 0.30))
+      drop-shadow(0 0 0 rgba(255, 240, 200, 0));
+    transform: scale(1);
+  }
+  50% {
+    filter:
+      drop-shadow(0 4px 14px rgba(245, 177, 51, 0.70))
+      drop-shadow(0 0 8px rgba(255, 240, 200, 0.55));
+    transform: scale(1.06);
+  }
 }
 
 .tagline {
