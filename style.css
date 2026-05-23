@@ -1,24 +1,29 @@
 :root {
-  /* Palette Minecraft */
-  --mc-bg: #1a1a1f;
-  --mc-stone: #6e6e6e;
-  --mc-stone-dark: #2d2d33;
-  --mc-slot-bg: #4a4a52;
-  --mc-slot-bg-2: #3a3a42;
-  --mc-slot-shadow: #1f1f25;
-  --mc-slot-highlight: #7a7a82;
-  --mc-panel: #2a2a32;
-  --mc-text: #f2f2f7;
-  --mc-text-dim: #b0b0bc;
-  --mc-text-shadow: rgba(0, 0, 0, 0.7);
-  --mc-gold: #ffaa00;
-  --mc-yellow: #ffd84d;
-  --mc-aqua: #5ad1ff;
-  --mc-green: #6ad36a;
-  --mc-red: #ff6b6b;
+  /* Palette sombre cohérente, accent doré unique */
+  --bg: #0f1115;
+  --bg-elev-1: #181b21;
+  --bg-elev-2: #20242c;
+  --bg-elev-3: #2a2f38;
+  --border: #2e333d;
+  --border-strong: #3a414d;
 
-  --body-font: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --pixel-font: 'Jersey 10', 'Inter', sans-serif;
+  --text: #f1f2f6;
+  --text-2: #c7cad3;
+  --text-dim: #8a8f9a;
+
+  --accent: #f5b133;          /* doré, seul accent principal */
+  --accent-soft: #ffd07a;
+  --accent-dim: #8a6620;
+  --accent-bg: rgba(245, 177, 51, 0.10);
+  --accent-border: rgba(245, 177, 51, 0.35);
+
+  --danger: #ef6a6a;
+  --positive: #5ad186;
+
+  --font: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+  --radius: 10px;
+  --radius-sm: 6px;
 }
 
 * { box-sizing: border-box; }
@@ -26,92 +31,64 @@
 html, body { margin: 0; padding: 0; min-height: 100%; }
 
 body {
-  font-family: var(--body-font);
+  font-family: var(--font);
   font-size: 15px;
-  background-color: var(--mc-bg);
-  background-image: url('https://raw.githubusercontent.com/PrismarineJS/minecraft-assets/master/data/1.21.8/blocks/stone.png');
-  background-repeat: repeat;
-  background-size: 48px 48px;
-  color: var(--mc-text);
-  line-height: 1.5;
+  background:
+    radial-gradient(1200px 600px at 50% -200px, rgba(245, 177, 51, 0.08), transparent 60%),
+    var(--bg);
+  color: var(--text);
+  line-height: 1.55;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background: rgba(15, 15, 20, 0.78);
-  z-index: -1;
-  pointer-events: none;
+/* Les icônes d'items et la tête restent en pixel art net */
+img.pixel,
+.game-card .card-winner img,
+.game-card .card-items img,
+.item-card img,
+.found-list img,
+.player-cell img,
+.logo {
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
 }
-
-img { image-rendering: pixelated; image-rendering: crisp-edges; }
 
 /* === HEADER === */
 header {
-  background-image: url('https://raw.githubusercontent.com/PrismarineJS/minecraft-assets/master/data/1.21.8/blocks/oak_planks.png');
-  background-repeat: repeat;
-  background-size: 64px 64px;
-  padding: 3rem 1rem 2.5rem;
+  padding: 3rem 1rem 2.2rem;
   text-align: center;
-  border-bottom: 3px solid #2a1d09;
-  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.4);
-  position: relative;
-}
-
-header::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(0,0,0,0.25), rgba(0,0,0,0.55));
-  pointer-events: none;
-}
-
-header > * { position: relative; }
-
-.title-plaque {
-  display: inline-block;
-  background: rgba(15, 15, 20, 0.88);
-  border: 2px solid var(--mc-slot-highlight);
-  box-shadow:
-    0 0 0 2px var(--mc-slot-shadow),
-    0 8px 0 rgba(0, 0, 0, 0.45),
-    inset 0 0 30px rgba(255, 170, 0, 0.08);
-  padding: 1.2rem 2.5rem 1rem;
-  border-radius: 2px;
+  border-bottom: 1px solid var(--border);
+  background:
+    radial-gradient(600px 260px at 50% 100%, rgba(245, 177, 51, 0.10), transparent 70%),
+    linear-gradient(180deg, #14161b, #0f1115);
 }
 
 header h1 {
   margin: 0;
-  font-family: var(--pixel-font);
-  color: var(--mc-yellow);
-  font-size: 3rem;
-  font-weight: 400;
+  color: var(--accent);
+  font-size: 2.4rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
   display: inline-flex;
   align-items: center;
-  gap: 0.7rem;
-  letter-spacing: 1px;
-  line-height: 1;
-  text-shadow: 0 3px 0 rgba(180, 100, 0, 0.6), 0 0 24px rgba(255, 216, 77, 0.35);
+  gap: 0.8rem;
+  line-height: 1.05;
 }
 
 header h1 .logo {
-  width: 1.1em;
-  height: 1.1em;
+  width: 1.3em;
+  height: 1.3em;
   object-fit: contain;
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.6));
+  filter: drop-shadow(0 4px 12px rgba(245, 177, 51, 0.35));
 }
 
 .tagline {
-  margin: 1.2rem 0 0;
-  color: #d4d4d8;
+  margin: 0.8rem 0 0;
+  color: var(--text-dim);
   font-size: 0.95rem;
   font-weight: 500;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+  letter-spacing: 0.3px;
 }
 
 main {
@@ -121,99 +98,86 @@ main {
 }
 
 h2 {
-  font-family: var(--pixel-font);
-  color: var(--mc-yellow);
-  font-size: 2.2rem;
-  font-weight: 400;
+  color: var(--text);
+  font-size: 1.35rem;
+  font-weight: 700;
   margin: 0 0 1.2rem;
-  letter-spacing: 1px;
-  line-height: 1;
+  letter-spacing: -0.2px;
 }
 
 h3 {
-  font-family: var(--pixel-font);
-  color: var(--mc-gold);
-  font-size: 1.7rem;
-  font-weight: 400;
+  color: var(--text-2);
+  font-size: 1.05rem;
+  font-weight: 600;
   margin: 1.8rem 0 0.8rem;
-  letter-spacing: 0.5px;
-  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
 }
 
-/* === Slot type inventaire MC, version sombre moderne === */
-.mc-slot,
-.stat-card,
-.game-card,
-.detail-header,
-.item-card,
-.winner-banner,
-.players-table {
-  background: linear-gradient(180deg, var(--mc-slot-bg), var(--mc-slot-bg-2));
-  border: 1px solid var(--mc-slot-highlight);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.08),
-    0 2px 0 var(--mc-slot-shadow),
-    0 4px 12px rgba(0, 0, 0, 0.4);
-  color: var(--mc-text);
-  border-radius: 3px;
-}
-
-/* === Stats === */
+/* === STATS === */
 .stats-bar {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 0.7rem;
+  gap: 0.8rem;
   margin-bottom: 2rem;
 }
 
 .stat-card {
-  padding: 1.1rem 1rem;
+  background: var(--bg-elev-1);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.1rem 1.1rem;
   text-align: center;
+  transition: border-color 0.15s ease;
 }
 
+.stat-card:hover { border-color: var(--border-strong); }
+
 .stat-card .value {
-  font-family: var(--pixel-font);
-  font-size: 2.2rem;
-  font-weight: 400;
-  color: var(--mc-yellow);
-  line-height: 1;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1.2;
   word-break: break-word;
-  letter-spacing: 0.5px;
+  letter-spacing: -0.3px;
 }
 
 .stat-card .label {
-  margin-top: 0.6rem;
-  color: var(--mc-text-dim);
-  font-size: 0.7rem;
+  margin-top: 0.5rem;
+  color: var(--text-dim);
+  font-size: 0.72rem;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 1.5px;
+  letter-spacing: 1.3px;
 }
 
 .count-badge {
   display: inline-block;
-  background: var(--mc-stone-dark);
-  border: 1px solid var(--mc-slot-shadow);
-  color: var(--mc-yellow);
-  font-family: var(--pixel-font);
-  font-size: 1.3rem;
-  padding: 0.05rem 0.7rem;
+  background: var(--accent-bg);
+  border: 1px solid var(--accent-border);
+  color: var(--accent);
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 0.1rem 0.6rem;
   vertical-align: middle;
   margin-left: 0.6rem;
-  border-radius: 3px;
-  line-height: 1.1;
+  border-radius: 999px;
+  line-height: 1.5;
 }
 
-/* === Liste === */
+/* === LISTE === */
 .games-list {
   display: grid;
-  gap: 0.6rem;
+  gap: 0.7rem;
 }
 
 .game-card {
+  background: var(--bg-elev-1);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
   padding: 1rem 1.3rem;
   cursor: pointer;
-  transition: transform 0.08s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+  transition: border-color 0.12s ease, transform 0.08s ease, background 0.12s ease;
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: center;
@@ -221,12 +185,9 @@ h3 {
 }
 
 .game-card:hover {
-  border-color: var(--mc-yellow);
-  transform: translateY(-2px);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.1),
-    0 2px 0 var(--mc-slot-shadow),
-    0 8px 20px rgba(255, 170, 0, 0.18);
+  border-color: var(--accent-border);
+  background: var(--bg-elev-2);
+  transform: translateY(-1px);
 }
 
 .game-card:active { transform: translateY(0); }
@@ -234,33 +195,33 @@ h3 {
 .game-card .card-winner {
   display: flex;
   align-items: center;
-  gap: 0.8rem;
+  gap: 0.85rem;
 }
 
 .game-card .card-winner img {
-  width: 52px;
-  height: 52px;
-  border: 2px solid var(--mc-stone-dark);
-  background: var(--mc-stone-dark);
-  border-radius: 3px;
+  width: 48px;
+  height: 48px;
+  background: var(--bg-elev-3);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  padding: 2px;
 }
 
 .game-card .winner-name {
-  font-family: var(--pixel-font);
-  font-weight: 400;
-  color: var(--mc-yellow);
-  font-size: 1.7rem;
-  line-height: 1;
-  margin-top: 0.15rem;
-  letter-spacing: 0.5px;
+  color: var(--text);
+  font-weight: 700;
+  font-size: 1.05rem;
+  line-height: 1.25;
+  letter-spacing: -0.1px;
 }
 
 .game-card .winner-label {
   font-size: 0.7rem;
-  color: var(--mc-gold);
+  color: var(--accent);
   text-transform: uppercase;
-  letter-spacing: 1.5px;
-  font-weight: 600;
+  letter-spacing: 1.3px;
+  font-weight: 700;
+  margin-bottom: 0.15rem;
 }
 
 .game-card .card-mid { min-width: 0; }
@@ -273,12 +234,12 @@ h3 {
 }
 
 .game-card .card-items img {
-  width: 30px;
-  height: 30px;
-  background: var(--mc-stone-dark);
-  border: 1px solid var(--mc-slot-shadow);
+  width: 28px;
+  height: 28px;
+  background: var(--bg-elev-3);
+  border: 1px solid var(--border);
   padding: 2px;
-  border-radius: 2px;
+  border-radius: 4px;
 }
 
 .game-card .card-right {
@@ -289,25 +250,23 @@ h3 {
 }
 
 .game-card .meta {
-  color: var(--mc-text-dim);
+  color: var(--text-dim);
   font-size: 0.85rem;
 }
 
 .game-card .duration {
-  font-family: var(--pixel-font);
-  font-size: 1.9rem;
-  font-weight: 400;
-  color: var(--mc-aqua);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text);
   font-variant-numeric: tabular-nums;
-  line-height: 1;
-  letter-spacing: 0.5px;
+  line-height: 1.2;
+  letter-spacing: -0.2px;
 }
 
 .game-card .date {
-  color: var(--mc-aqua);
-  font-size: 0.95rem;
-  font-weight: 600;
-  letter-spacing: 0.3px;
+  color: var(--text-2);
+  font-size: 0.9rem;
+  font-weight: 500;
 }
 
 @media (max-width: 640px) {
@@ -320,63 +279,56 @@ h3 {
   }
 }
 
-/* === Bouton retour === */
+/* === BOUTON RETOUR === */
 .back-btn {
-  background: linear-gradient(180deg, var(--mc-slot-bg), var(--mc-slot-bg-2));
-  color: var(--mc-text);
-  font-family: var(--body-font);
-  font-size: 0.95rem;
+  background: var(--bg-elev-1);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 0.9rem;
   font-weight: 600;
-  border: 1px solid var(--mc-slot-highlight);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.08),
-    0 2px 0 var(--mc-slot-shadow);
-  padding: 0.55rem 1.5rem;
+  border: 1px solid var(--border-strong);
+  padding: 0.55rem 1.3rem;
   cursor: pointer;
   margin-bottom: 1.2rem;
-  border-radius: 3px;
-  transition: all 0.1s ease;
-  letter-spacing: 0.5px;
+  border-radius: var(--radius-sm);
+  transition: all 0.12s ease;
+  letter-spacing: 0.2px;
 }
 
 .back-btn:hover {
-  border-color: var(--mc-yellow);
-  color: var(--mc-yellow);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.1),
-    0 2px 0 var(--mc-slot-shadow),
-    0 4px 12px rgba(255, 170, 0, 0.2);
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--bg-elev-2);
 }
 
-.back-btn:active {
-  transform: translateY(1px);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
-}
+.back-btn:active { transform: translateY(1px); }
 
-/* === Détail === */
+/* === DÉTAIL === */
 .detail-header {
+  background: var(--bg-elev-1);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
   padding: 1.4rem 1.6rem;
   margin-bottom: 1.5rem;
 }
 
-.detail-header h2 { margin: 0 0 0.6rem; }
+.detail-header h2 { margin: 0 0 0.5rem; }
+.detail-header .meta { color: var(--text-dim); font-size: 0.9rem; }
 
 .winner-banner {
-  background: linear-gradient(180deg, rgba(255, 170, 0, 0.15), rgba(255, 170, 0, 0.05));
-  border: 1px solid var(--mc-yellow);
-  padding: 0.9rem 1.2rem;
-  margin: 1rem 0;
-  font-size: 1rem;
-  font-weight: 500;
+  background: var(--accent-bg);
+  border: 1px solid var(--accent-border);
+  border-radius: var(--radius-sm);
+  padding: 0.85rem 1.1rem;
+  margin: 1rem 0 0;
+  font-size: 0.95rem;
+  color: var(--text-2);
 }
 
 .winner-banner .name {
-  font-family: var(--pixel-font);
-  color: var(--mc-yellow);
-  font-weight: 400;
-  font-size: 1.7rem;
-  letter-spacing: 0.5px;
-  vertical-align: middle;
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 1.05rem;
   margin-left: 0.3rem;
 }
 
@@ -388,6 +340,9 @@ h3 {
 }
 
 .item-card {
+  background: var(--bg-elev-1);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
   padding: 0.8rem 0.4rem;
   text-align: center;
 }
@@ -396,49 +351,50 @@ h3 {
   width: 48px;
   height: 48px;
   margin-bottom: 0.5rem;
-  background: var(--mc-stone-dark);
-  border: 1px solid var(--mc-slot-shadow);
+  background: var(--bg-elev-3);
+  border: 1px solid var(--border);
   padding: 4px;
-  border-radius: 3px;
+  border-radius: 4px;
 }
 
 .item-card .name {
   font-size: 0.85rem;
-  color: var(--mc-aqua);
+  color: var(--text-2);
   font-weight: 500;
 }
 
+/* === TABLEAU === */
 .players-table {
   width: 100%;
   border-collapse: separate;
   border-spacing: 0;
   margin-top: 1rem;
+  background: var(--bg-elev-1);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
   overflow: hidden;
 }
 
 .players-table th,
 .players-table td {
   text-align: left;
-  padding: 0.8rem 1rem;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid var(--border);
 }
+
+.players-table tr:last-child td { border-bottom: none; }
 
 .players-table th {
-  color: var(--mc-gold);
+  color: var(--text-dim);
   font-weight: 600;
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--bg-elev-2);
   text-transform: uppercase;
   letter-spacing: 1.2px;
-  font-size: 0.75rem;
+  font-size: 0.72rem;
 }
 
-.players-table tr.winner-row {
-  background: rgba(255, 170, 0, 0.12);
-}
-
-.players-table tr.winner-row td:first-child {
-  color: var(--mc-yellow);
-}
+.players-table tr.winner-row { background: var(--accent-bg); }
+.players-table tr.winner-row td:first-child { color: var(--accent); font-weight: 600; }
 
 .player-cell {
   display: flex;
@@ -449,11 +405,12 @@ h3 {
 }
 
 .player-cell img {
-  width: 36px;
-  height: 36px;
-  border: 1px solid var(--mc-slot-shadow);
-  background: var(--mc-stone-dark);
-  border-radius: 3px;
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--border-strong);
+  background: var(--bg-elev-3);
+  border-radius: var(--radius-sm);
+  padding: 1px;
 }
 
 .found-list {
@@ -463,31 +420,30 @@ h3 {
 }
 
 .found-list img {
-  width: 30px;
-  height: 30px;
-  background: var(--mc-stone-dark);
-  border: 1px solid var(--mc-slot-shadow);
+  width: 28px;
+  height: 28px;
+  background: var(--bg-elev-3);
+  border: 1px solid var(--border);
   padding: 1px;
-  border-radius: 2px;
+  border-radius: 3px;
 }
 
 .found-list img.missing {
-  opacity: 0.3;
+  opacity: 0.25;
   filter: grayscale(1);
 }
 
 .empty {
   text-align: center;
-  color: var(--mc-text-dim);
+  color: var(--text-dim);
   padding: 3rem 1rem;
-  font-size: 1rem;
+  font-size: 0.95rem;
 }
 
 footer {
   text-align: center;
-  color: var(--mc-text-dim);
-  font-size: 0.85rem;
+  color: var(--text-dim);
+  font-size: 0.82rem;
   padding: 1.5rem;
-  border-top: 3px solid var(--mc-stone-dark);
-  background: rgba(0, 0, 0, 0.55);
+  border-top: 1px solid var(--border);
 }
