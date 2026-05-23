@@ -1,167 +1,262 @@
 :root {
-  --bg: #1a1a1f;
-  --bg-2: #25252d;
-  --bg-3: #2f2f3a;
-  --fg: #e8e8ee;
-  --fg-dim: #9a9aab;
-  --accent: #ffb800;
-  --accent-2: #5ad1ff;
-  --green: #6ad36a;
-  --red: #ff6b6b;
-  --border: #3a3a48;
+  /* Palette inspirée des GUI Minecraft */
+  --mc-bg: #1a1a1f;
+  --mc-stone: #6e6e6e;
+  --mc-stone-dark: #3f3f3f;
+  --mc-slot-bg: #8b8b8b;
+  --mc-slot-shadow: #373737;
+  --mc-slot-highlight: #ffffff;
+  --mc-slot-inner: #8b8b8b;
+  --mc-panel: #c6c6c6;
+  --mc-panel-shadow: #555555;
+  --mc-panel-highlight: #ffffff;
+  --mc-text: #ffffff;
+  --mc-text-shadow: #3f3f3f;
+  --mc-gold: #ffaa00;
+  --mc-gold-shadow: #3f2a00;
+  --mc-yellow: #ffff55;
+  --mc-yellow-shadow: #3f3f15;
+  --mc-aqua: #55ffff;
+  --mc-aqua-shadow: #153f3f;
+  --mc-green: #55ff55;
+  --mc-green-shadow: #153f15;
+  --mc-red: #ff5555;
+  --mc-gray: #aaaaaa;
+  --mc-dark-gray: #555555;
+
+  --pixel-font: 'Pixelify Sans', 'VT323', 'Courier New', monospace;
 }
 
 * { box-sizing: border-box; }
 
-body {
+html, body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  background: var(--bg);
-  color: var(--fg);
-  line-height: 1.5;
+  padding: 0;
+  min-height: 100%;
 }
 
+body {
+  font-family: var(--pixel-font);
+  background-color: #1a1a1f;
+  /* Texture pierre de Minecraft, tile petit */
+  background-image: url('https://raw.githubusercontent.com/PrismarineJS/minecraft-assets/master/data/1.21.8/blocks/stone.png');
+  background-repeat: repeat;
+  background-size: 48px 48px;
+  image-rendering: pixelated;
+  color: var(--mc-text);
+  line-height: 1.4;
+  text-shadow: 2px 2px 0 var(--mc-text-shadow);
+}
+
+/* Voile assombri par-dessus la pierre pour la lisibilité */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Tous les boutons / cartes pixelisées */
+img {
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+/* === Header avec bandeau de planches en bois === */
 header {
-  background:
-    radial-gradient(ellipse at top, rgba(255, 184, 0, 0.18), transparent 60%),
-    linear-gradient(135deg, #2a1f0a, #1a1a1f);
+  background-image: url('https://raw.githubusercontent.com/PrismarineJS/minecraft-assets/master/data/1.21.8/blocks/oak_planks.png');
+  background-repeat: repeat;
+  background-size: 64px 64px;
+  image-rendering: pixelated;
   padding: 2.5rem 1rem 2rem;
   text-align: center;
-  border-bottom: 2px solid var(--accent);
+  border-bottom: 4px solid #3a2a0e;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.4);
+  position: relative;
 }
+
+header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0.0), rgba(0,0,0,0.3));
+  pointer-events: none;
+}
+
+header > * { position: relative; }
 
 header h1 {
   margin: 0;
-  color: var(--accent);
-  font-size: 2.6rem;
+  color: var(--mc-yellow);
+  font-size: 2.8rem;
+  font-weight: 700;
   display: inline-flex;
   align-items: center;
   gap: 0.8rem;
-  text-shadow: 0 2px 12px rgba(255, 184, 0, 0.35);
+  text-shadow:
+    3px 3px 0 var(--mc-yellow-shadow),
+    0 0 18px rgba(255, 255, 85, 0.4);
+  letter-spacing: 1px;
 }
 
 header h1 .logo {
   width: 1.4em;
   height: 1.4em;
   object-fit: contain;
-  image-rendering: pixelated;
-  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.6));
+  filter: drop-shadow(2px 2px 0 rgba(0, 0, 0, 0.7));
 }
 
 .tagline {
-  margin: 0.6rem 0 0;
-  color: var(--fg-dim);
-  letter-spacing: 0.5px;
-}
-
-.stats-bar {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: 0.8rem;
-  margin-bottom: 2rem;
-}
-
-.stat-card {
-  background: linear-gradient(135deg, var(--bg-2), var(--bg-3));
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 1rem 1.2rem;
-  text-align: center;
-}
-
-.stat-card .value {
-  font-size: 2rem;
-  font-weight: 700;
-  color: var(--accent);
-  line-height: 1;
-}
-
-.stat-card .label {
-  margin-top: 0.4rem;
-  color: var(--fg-dim);
-  font-size: 0.85rem;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-.count-badge {
-  display: inline-block;
-  background: var(--bg-3);
-  color: var(--fg-dim);
-  font-size: 0.85rem;
-  padding: 0.15rem 0.6rem;
-  border-radius: 12px;
-  vertical-align: middle;
-  margin-left: 0.5rem;
+  margin: 0.8rem 0 0;
+  color: var(--mc-gray);
+  font-size: 1.1rem;
+  text-shadow: 2px 2px 0 var(--mc-text-shadow);
 }
 
 main {
   max-width: 1100px;
   margin: 0 auto;
-  padding: 1.5rem 1rem 3rem;
+  padding: 2rem 1rem 3rem;
 }
 
 h2 {
-  color: var(--accent);
-  border-bottom: 1px solid var(--border);
-  padding-bottom: 0.4rem;
+  color: var(--mc-yellow);
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: 0 0 1rem;
+  text-shadow: 2px 2px 0 var(--mc-yellow-shadow);
 }
 
+h3 {
+  color: var(--mc-gold);
+  font-size: 1.4rem;
+  margin: 1.5rem 0 0.8rem;
+  text-shadow: 2px 2px 0 var(--mc-gold-shadow);
+}
+
+/* === "Slot" d'inventaire Minecraft : bordure biseautée === */
+.mc-slot,
+.stat-card,
+.game-card,
+.detail-header,
+.item-card,
+.winner-banner,
+.players-table {
+  background: var(--mc-slot-inner);
+  border: 2px solid;
+  border-color: var(--mc-slot-highlight) var(--mc-slot-shadow) var(--mc-slot-shadow) var(--mc-slot-highlight);
+  box-shadow:
+    inset 2px 2px 0 rgba(255, 255, 255, 0.15),
+    inset -2px -2px 0 rgba(0, 0, 0, 0.25);
+  color: var(--mc-text);
+}
+
+/* === Stats globales (rangée d'inventaire) === */
+.stats-bar {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0.6rem;
+  margin-bottom: 2rem;
+}
+
+.stat-card {
+  padding: 1rem;
+  text-align: center;
+  background-color: #5a5a5a;
+}
+
+.stat-card .value {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--mc-yellow);
+  text-shadow: 2px 2px 0 var(--mc-yellow-shadow);
+  line-height: 1.1;
+  word-break: break-word;
+}
+
+.stat-card .label {
+  margin-top: 0.5rem;
+  color: #e0e0e0;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-shadow: 2px 2px 0 var(--mc-text-shadow);
+}
+
+.count-badge {
+  display: inline-block;
+  background: var(--mc-stone-dark);
+  border: 2px solid;
+  border-color: var(--mc-slot-shadow) var(--mc-slot-highlight) var(--mc-slot-highlight) var(--mc-slot-shadow);
+  color: var(--mc-yellow);
+  font-size: 0.95rem;
+  padding: 0.05rem 0.6rem;
+  vertical-align: middle;
+  margin-left: 0.5rem;
+  text-shadow: 2px 2px 0 var(--mc-yellow-shadow);
+}
+
+/* === Liste des parties === */
 .games-list {
   display: grid;
-  gap: 0.8rem;
+  gap: 0.7rem;
 }
 
 .game-card {
-  background: linear-gradient(135deg, var(--bg-2), #20202a);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 1.1rem 1.3rem;
+  padding: 1rem 1.2rem;
   cursor: pointer;
-  transition: transform 0.12s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+  transition: transform 0.05s ease, filter 0.1s ease;
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: center;
   gap: 1.2rem;
+  background-color: #5a5a5a;
 }
 
 .game-card:hover {
-  border-color: var(--accent);
+  filter: brightness(1.15);
   transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+  border-color: var(--mc-yellow) var(--mc-yellow-shadow) var(--mc-yellow-shadow) var(--mc-yellow);
+}
+
+.game-card:active {
+  transform: translateY(0);
+  filter: brightness(0.95);
 }
 
 .game-card .card-winner {
   display: flex;
   align-items: center;
-  gap: 0.7rem;
+  gap: 0.8rem;
 }
 
 .game-card .card-winner img {
-  width: 44px;
-  height: 44px;
-  border-radius: 6px;
-  image-rendering: pixelated;
-  border: 2px solid var(--accent);
+  width: 52px;
+  height: 52px;
+  border: 2px solid;
+  border-color: var(--mc-slot-shadow) var(--mc-slot-highlight) var(--mc-slot-highlight) var(--mc-slot-shadow);
+  background: var(--mc-stone-dark);
 }
 
 .game-card .winner-name {
   font-weight: 700;
-  color: var(--accent);
-  font-size: 1.05rem;
+  color: var(--mc-yellow);
+  font-size: 1.2rem;
+  text-shadow: 2px 2px 0 var(--mc-yellow-shadow);
   line-height: 1.2;
 }
 
 .game-card .winner-label {
-  font-size: 0.75rem;
-  color: var(--fg-dim);
+  font-size: 0.85rem;
+  color: var(--mc-gold);
   text-transform: uppercase;
   letter-spacing: 1px;
+  text-shadow: 2px 2px 0 var(--mc-gold-shadow);
 }
 
-.game-card .card-mid {
-  min-width: 0;
-}
+.game-card .card-mid { min-width: 0; }
 
 .game-card .card-items {
   display: flex;
@@ -171,11 +266,11 @@ h2 {
 }
 
 .game-card .card-items img {
-  width: 26px;
-  height: 26px;
-  image-rendering: pixelated;
-  background: var(--bg-3);
-  border-radius: 4px;
+  width: 32px;
+  height: 32px;
+  background: var(--mc-stone-dark);
+  border: 2px solid;
+  border-color: var(--mc-slot-shadow) var(--mc-slot-highlight) var(--mc-slot-highlight) var(--mc-slot-shadow);
   padding: 2px;
 }
 
@@ -183,25 +278,28 @@ h2 {
   text-align: right;
   display: flex;
   flex-direction: column;
-  gap: 0.2rem;
+  gap: 0.3rem;
 }
 
 .game-card .meta {
-  color: var(--fg-dim);
-  font-size: 0.85rem;
+  color: #d4d4d4;
+  font-size: 0.95rem;
+  text-shadow: 2px 2px 0 var(--mc-text-shadow);
 }
 
 .game-card .duration {
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   font-weight: 700;
-  color: var(--accent-2);
+  color: var(--mc-aqua);
   font-variant-numeric: tabular-nums;
+  text-shadow: 2px 2px 0 var(--mc-aqua-shadow);
 }
 
 .game-card .date {
-  color: var(--accent-2);
-  font-size: 0.95rem;
+  color: var(--mc-aqua);
+  font-size: 1.05rem;
   font-weight: 600;
+  text-shadow: 2px 2px 0 var(--mc-aqua-shadow);
 }
 
 @media (max-width: 640px) {
@@ -216,108 +314,134 @@ h2 {
   }
 }
 
+/* === Bouton retour façon bouton Minecraft === */
 .back-btn {
-  background: var(--bg-3);
-  color: var(--fg);
-  border: 1px solid var(--border);
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
+  background: var(--mc-panel);
+  color: var(--mc-text);
+  font-family: var(--pixel-font);
+  font-size: 1.1rem;
+  font-weight: 600;
+  border: 2px solid;
+  border-color: var(--mc-panel-highlight) #555555 #555555 var(--mc-panel-highlight);
+  box-shadow: inset 2px 2px 0 rgba(255,255,255,0.4), inset -2px -2px 0 rgba(0,0,0,0.3);
+  padding: 0.55rem 1.4rem;
   cursor: pointer;
-  margin-bottom: 1rem;
-  font-size: 0.95rem;
+  margin-bottom: 1.2rem;
+  text-shadow: 2px 2px 0 var(--mc-text-shadow);
+  transition: filter 0.08s ease;
 }
 
-.back-btn:hover { border-color: var(--accent); }
+.back-btn:hover {
+  filter: brightness(1.15);
+  border-color: var(--mc-yellow) #555555 #555555 var(--mc-yellow);
+}
 
+.back-btn:active {
+  filter: brightness(0.9);
+}
+
+/* === Page de détail === */
 .detail-header {
-  background: var(--bg-2);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 1.2rem;
+  background-color: #5a5a5a;
+  padding: 1.4rem;
   margin-bottom: 1.5rem;
 }
 
 .detail-header h2 {
   margin: 0 0 0.5rem;
-  border: none;
-  padding: 0;
 }
 
 .winner-banner {
-  background: linear-gradient(90deg, #3a2a05, #2a1f0a);
-  border: 1px solid var(--accent);
-  border-radius: 6px;
-  padding: 0.8rem 1rem;
+  background-color: #4a3a10;
+  border-color: var(--mc-yellow) var(--mc-yellow-shadow) var(--mc-yellow-shadow) var(--mc-yellow);
+  padding: 0.9rem 1.2rem;
   margin: 1rem 0;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
+  text-shadow: 2px 2px 0 var(--mc-text-shadow);
 }
 
 .winner-banner .name {
-  color: var(--accent);
+  color: var(--mc-yellow);
   font-weight: 700;
+  text-shadow: 2px 2px 0 var(--mc-yellow-shadow);
 }
 
 .items-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-  gap: 0.8rem;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 0.6rem;
   margin: 1rem 0;
 }
 
 .item-card {
-  background: var(--bg-3);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 0.6rem;
+  background-color: #5a5a5a;
+  padding: 0.7rem 0.4rem;
   text-align: center;
 }
 
 .item-card img {
   width: 48px;
   height: 48px;
-  image-rendering: pixelated;
   margin-bottom: 0.4rem;
+  background: var(--mc-stone-dark);
+  border: 2px solid;
+  border-color: var(--mc-slot-shadow) var(--mc-slot-highlight) var(--mc-slot-highlight) var(--mc-slot-shadow);
+  padding: 2px;
 }
 
 .item-card .name {
-  font-size: 0.85rem;
-  color: var(--fg-dim);
+  font-size: 0.9rem;
+  color: var(--mc-aqua);
+  text-shadow: 2px 2px 0 var(--mc-aqua-shadow);
 }
 
 .players-table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
   margin-top: 1rem;
+  background-color: #5a5a5a;
 }
 
 .players-table th,
 .players-table td {
   text-align: left;
-  padding: 0.6rem 0.8rem;
-  border-bottom: 1px solid var(--border);
+  padding: 0.7rem 0.9rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
 }
 
 .players-table th {
-  color: var(--accent);
-  font-weight: 600;
-  background: var(--bg-2);
+  color: var(--mc-yellow);
+  font-weight: 700;
+  background: rgba(0, 0, 0, 0.25);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 0.9rem;
+  text-shadow: 2px 2px 0 var(--mc-yellow-shadow);
 }
 
 .players-table tr.winner-row {
-  background: rgba(255, 184, 0, 0.08);
+  background: rgba(255, 170, 0, 0.18);
+}
+
+.players-table tr.winner-row td:first-child {
+  color: var(--mc-yellow);
+  text-shadow: 2px 2px 0 var(--mc-yellow-shadow);
 }
 
 .player-cell {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
+  gap: 0.7rem;
+  font-size: 1.05rem;
 }
 
 .player-cell img {
-  width: 32px;
-  height: 32px;
-  border-radius: 4px;
-  image-rendering: pixelated;
+  width: 36px;
+  height: 36px;
+  border: 2px solid;
+  border-color: var(--mc-slot-shadow) var(--mc-slot-highlight) var(--mc-slot-highlight) var(--mc-slot-shadow);
+  background: var(--mc-stone-dark);
 }
 
 .found-list {
@@ -327,29 +451,33 @@ h2 {
 }
 
 .found-list img {
-  width: 28px;
-  height: 28px;
-  image-rendering: pixelated;
-  background: var(--bg-3);
-  border-radius: 3px;
-  padding: 2px;
+  width: 30px;
+  height: 30px;
+  background: var(--mc-stone-dark);
+  border: 2px solid;
+  border-color: var(--mc-slot-shadow) var(--mc-slot-highlight) var(--mc-slot-highlight) var(--mc-slot-shadow);
+  padding: 1px;
 }
 
 .found-list img.missing {
-  opacity: 0.25;
+  opacity: 0.3;
   filter: grayscale(1);
 }
 
 .empty {
   text-align: center;
-  color: var(--fg-dim);
+  color: var(--mc-gray);
   padding: 3rem 1rem;
+  font-size: 1.2rem;
+  text-shadow: 2px 2px 0 var(--mc-text-shadow);
 }
 
 footer {
   text-align: center;
-  color: var(--fg-dim);
-  font-size: 0.85rem;
+  color: var(--mc-gray);
+  font-size: 1rem;
   padding: 1.5rem;
-  border-top: 1px solid var(--border);
+  border-top: 4px solid var(--mc-stone-dark);
+  background: rgba(0, 0, 0, 0.45);
+  text-shadow: 2px 2px 0 var(--mc-text-shadow);
 }
