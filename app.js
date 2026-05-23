@@ -47,6 +47,33 @@ async function loadGame(id) {
   return res.json();
 }
 
+function renderStats(games) {
+  const bar = document.getElementById('stats-bar');
+  if (!games || games.length === 0) {
+    bar.hidden = true;
+    return;
+  }
+  bar.hidden = false;
+  const totalGames = games.length;
+  const winners = {};
+  let totalDuration = 0;
+  let fastest = Infinity;
+  for (const g of games) {
+    winners[g.winner] = (winners[g.winner] || 0) + 1;
+    totalDuration += g.durationMs;
+    if (g.durationMs < fastest) fastest = g.durationMs;
+  }
+  const topWinner = Object.entries(winners).sort((a, b) => b[1] - a[1])[0];
+  const avgDuration = totalDuration / totalGames;
+  bar.innerHTML = `
+    <div class="stat-card"><div class="value">${totalGames}</div><div class="label">Parties</div></div>
+    <div class="stat-card"><div class="value">${escapeHtml(topWinner[0])}</div><div class="label">${topWinner[1]} victoire${topWinner[1] > 1 ? 's' : ''}</div></div>
+    <div class="stat-card"><div class="value">${formatDuration(fastest)}</div><div class="label">Meilleur temps</div></div>
+    <div class="stat-card"><div class="value">${formatDuration(avgDuration)}</div><div class="label">Temps moyen</div></div>
+  `;
+  document.getElementById('games-count').textContent = totalGames;
+}
+
 function renderList(games) {
   const list = document.getElementById('games-list');
   if (!games || games.length === 0) {
@@ -58,13 +85,21 @@ function renderList(games) {
     const card = document.createElement('div');
     card.className = 'game-card';
     card.innerHTML = `
-      <div>
-        <div class="date">${formatDate(g.start)}</div>
-        <div class="meta">${g.itemCount} items · ${g.playerCount} joueur(s)</div>
+      <div class="card-winner">
+        <img src="${skinUrl(g.winnerUuid || '00000000-0000-0000-0000-000000000000')}" alt="" onerror="this.src='https://crafatar.com/avatars/00000000-0000-0000-0000-000000000000?size=64&overlay'" />
+        <div>
+          <div class="winner-label">🏆 Gagnant</div>
+          <div class="winner-name">${escapeHtml(g.winner)}</div>
+        </div>
       </div>
-      <div>
-        <div class="winner">🏆 ${escapeHtml(g.winner)}</div>
-        <div class="meta">⏱ ${formatDuration(g.durationMs)}</div>
+      <div class="card-mid">
+        <div class="date">${formatDate(g.start)}</div>
+        <div class="meta">${g.itemCount} item${g.itemCount > 1 ? 's' : ''} · ${g.playerCount} joueur${g.playerCount > 1 ? 's' : ''}</div>
+        ${g.items ? `<div class="card-items">${g.items.slice(0, 12).map(i => `<img src="${itemImageUrl(i)}" alt="${escapeHtml(i)}" title="${escapeHtml(prettyItem(i))}" data-fallback="${itemImageFallback(i)}" onerror="if(this.dataset.fallback){this.src=this.dataset.fallback;this.dataset.fallback='';}else{this.style.display='none';}" />`).join('')}${g.items.length > 12 ? `<span class="meta">+${g.items.length - 12}</span>` : ''}</div>` : ''}
+      </div>
+      <div class="card-right">
+        <div class="duration">⏱ ${formatDuration(g.durationMs)}</div>
+        <div class="meta">Voir détails →</div>
       </div>
     `;
     card.addEventListener('click', () => showDetail(g.id));
@@ -151,7 +186,7 @@ document.getElementById('back-btn').addEventListener('click', () => {
 });
 
 loadIndex()
-  .then(renderList)
+  .then(games => { renderStats(games); renderList(games); })
   .catch(e => {
     document.getElementById('games-list').innerHTML =
       `<div class="empty">Erreur de chargement : ${escapeHtml(e.message)}</div>`;
