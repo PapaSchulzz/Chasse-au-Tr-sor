@@ -1,8 +1,20 @@
 const DATA_BASE = 'data';
 const ITEM_IMG_BASE = 'https://raw.githubusercontent.com/PrismarineJS/minecraft-assets/master/data/1.21.8';
 
+// Items dont la texture est animée dans minecraft-assets (frames _00.._NN).
+// On choisit une frame représentative pour l'inventaire.
+const ANIMATED_ITEM_FRAMES = {
+  compass: 16,
+  recovery_compass: 16,
+  clock: 28,
+};
+
 function itemImageUrl(materialName) {
   const name = materialName.toLowerCase();
+  if (name in ANIMATED_ITEM_FRAMES) {
+    const frame = String(ANIMATED_ITEM_FRAMES[name]).padStart(2, '0');
+    return `${ITEM_IMG_BASE}/items/${name}_${frame}.png`;
+  }
   // On essaie d'abord items/, le onerror inline bascule vers blocks/ si absent.
   return `${ITEM_IMG_BASE}/items/${name}.png`;
 }
