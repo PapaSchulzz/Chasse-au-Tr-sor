@@ -23,9 +23,16 @@ function itemImageFallback(materialName) {
   return `${ITEM_IMG_BASE}/blocks/${materialName.toLowerCase()}.png`;
 }
 
-function skinUrl(playerName) {
-  // mc-heads.net fonctionne par pseudo (pratique en mode offline/cracked où l'UUID Mojang n'existe pas)
-  return `https://mc-heads.net/avatar/${encodeURIComponent(playerName || 'MHF_Steve')}/64`;
+function skinUrl(playerNameOrObj) {
+  // Préférer l'UUID si dispo : mc-heads.net cache parfois une vieille version par pseudo
+  // (skin changé, pseudo recyclé…). L'UUID renvoie toujours le skin actuel.
+  if (playerNameOrObj && typeof playerNameOrObj === 'object') {
+    if (playerNameOrObj.uuid) {
+      return `https://mc-heads.net/avatar/${encodeURIComponent(playerNameOrObj.uuid)}/64`;
+    }
+    return `https://mc-heads.net/avatar/${encodeURIComponent(playerNameOrObj.name || 'MHF_Steve')}/64`;
+  }
+  return `https://mc-heads.net/avatar/${encodeURIComponent(playerNameOrObj || 'MHF_Steve')}/64`;
 }
 
 function prettyItem(name) {
@@ -98,7 +105,7 @@ function renderList(games) {
     card.className = 'game-card';
     card.innerHTML = `
       <div class="card-winner">
-        <img src="${skinUrl(g.winner)}" alt="" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/64'" />
+        <img src="${skinUrl({ uuid: g.winnerUuid, name: g.winner })}" alt="" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/64'" />
         <div>
           <div class="winner-label"><img src="trophy.gif" class="trophy-icon" alt="" /> Gagnant</div>
           <div class="winner-name">${escapeHtml(g.winner)}</div>
@@ -156,7 +163,7 @@ function renderDetail(g) {
       <tr class="${p.winner ? 'winner-row' : ''}">
         <td>
           <div class="player-cell">
-            <img src="${skinUrl(p.name)}" alt="" onerror="this.style.visibility='hidden'" />
+            <img src="${skinUrl(p)}" alt="" onerror="this.style.visibility='hidden'" />
             <span>${p.winner ? '<img src="trophy.gif" class="trophy-icon" alt="" /> ' : ''}${escapeHtml(p.name)}</span>
           </div>
         </td>
