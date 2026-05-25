@@ -9,6 +9,43 @@ const ANIMATED_ITEM_FRAMES = {
   clock: 28,
 };
 
+// Blocs multi-faces : pas de fichier blocks/<name>.png unique dans minecraft-assets.
+// On force le suffixe de face le plus reconnaissable.
+const MULTIFACE_BLOCK_FACE = {
+  tnt: 'side',
+  quartz_block: 'side',
+  quartz_pillar: 'side',
+  smooth_quartz: 'side', // n'existe pas en multi-face, mais au cas où
+  hay_block: 'side',
+  bone_block: 'side',
+  furnace: 'front',
+  blast_furnace: 'front',
+  smoker: 'front',
+  crafting_table: 'front',
+  cartography_table: 'side1',
+  fletching_table: 'side1',
+  smithing_table: 'side',
+  loom: 'front',
+  stonecutter: 'side',
+  grindstone: 'side',
+  lectern: 'sides',
+  composter: 'side',
+  beehive: 'front',
+  bee_nest: 'front',
+  jukebox: 'side',
+  note_block: '', // a un items/note_block.png? si non, fallback echoue
+  dispenser: 'front_horizontal',
+  dropper: 'front_horizontal',
+  observer: 'front',
+  piston: 'side',
+  sticky_piston: 'side',
+  redstone_lamp: '',
+  pumpkin: 'side',
+  carved_pumpkin: 'side',
+  jack_o_lantern: 'side',
+  melon: 'side',
+};
+
 function itemImageUrl(materialName) {
   const name = materialName.toLowerCase();
   if (name in ANIMATED_ITEM_FRAMES) {
@@ -20,7 +57,11 @@ function itemImageUrl(materialName) {
 }
 
 function itemImageFallback(materialName) {
-  return `${ITEM_IMG_BASE}/blocks/${materialName.toLowerCase()}.png`;
+  const name = materialName.toLowerCase();
+  if (name in MULTIFACE_BLOCK_FACE && MULTIFACE_BLOCK_FACE[name]) {
+    return `${ITEM_IMG_BASE}/blocks/${name}_${MULTIFACE_BLOCK_FACE[name]}.png`;
+  }
+  return `${ITEM_IMG_BASE}/blocks/${name}.png`;
 }
 
 function skinUrl(playerNameOrObj) {
