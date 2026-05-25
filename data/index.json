@@ -1,4 +1,5 @@
 [
+  {"id": "2026-05-25_16-44-55", "start": "2026-05-25T14:44:55.870Z", "durationMs": 968261, "winner": "demoiselle_Elise", "winnerUuid": "b00b96e4-1782-4ca0-a8f7-67a338cc7c9d", "itemCount": 1, "items": ["AMETHYST_SHARD"], "playerCount": 4},
   {"id": "2026-05-25_16-10-09", "start": "2026-05-25T14:10:09.470Z", "durationMs": 1920132, "winner": "K1ngTaco", "winnerUuid": "cc38e4ab-8e36-4261-986d-d85a79646069", "itemCount": 7, "items": ["TNT", "FLINT_AND_STEEL", "QUARTZ_BLOCK", "SALMON_BUCKET", "DIAMOND_HOE", "GOLDEN_APPLE", "ENCHANTED_BOOK"], "playerCount": 6},
   {"id": "2026-05-23_15-30-20", "start": "2026-05-23T13:30:20.416Z", "durationMs": 2117713, "winner": "Ryuwenx2011", "winnerUuid": "ce37b4ad-89a3-4a1b-9235-b5d615c24bcb", "itemCount": 5, "items": ["CAKE", "COMPASS", "ENDER_PEARL", "EMERALD", "POPPY"], "playerCount": 8}
 ]
