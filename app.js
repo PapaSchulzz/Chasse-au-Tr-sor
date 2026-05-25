@@ -46,8 +46,17 @@ const MULTIFACE_BLOCK_FACE = {
   melon: 'side',
 };
 
-function itemImageUrl(materialName) {
-  const name = materialName.toLowerCase();
+// Sépare "ENCHANTED_BOOK:SHARPNESS_5" → { material: "ENCHANTED_BOOK", variant: "SHARPNESS_5" }
+function parseTarget(raw) {
+  if (typeof raw !== 'string') return { material: '', variant: null };
+  const idx = raw.indexOf(':');
+  if (idx < 0) return { material: raw, variant: null };
+  return { material: raw.slice(0, idx), variant: raw.slice(idx + 1) };
+}
+
+function itemImageUrl(targetStr) {
+  const { material } = parseTarget(targetStr);
+  const name = material.toLowerCase();
   if (name in ANIMATED_ITEM_FRAMES) {
     const frame = String(ANIMATED_ITEM_FRAMES[name]).padStart(2, '0');
     return `${ITEM_IMG_BASE}/items/${name}_${frame}.png`;
@@ -56,8 +65,9 @@ function itemImageUrl(materialName) {
   return `${ITEM_IMG_BASE}/items/${name}.png`;
 }
 
-function itemImageFallback(materialName) {
-  const name = materialName.toLowerCase();
+function itemImageFallback(targetStr) {
+  const { material } = parseTarget(targetStr);
+  const name = material.toLowerCase();
   if (name in MULTIFACE_BLOCK_FACE && MULTIFACE_BLOCK_FACE[name]) {
     return `${ITEM_IMG_BASE}/blocks/${name}_${MULTIFACE_BLOCK_FACE[name]}.png`;
   }
@@ -76,8 +86,35 @@ function skinUrl(playerNameOrObj) {
   return `https://mc-heads.net/avatar/${encodeURIComponent(playerNameOrObj || 'MHF_Steve')}/64`;
 }
 
-function prettyItem(name) {
-  return name.toLowerCase().split('_').map(w => w[0].toUpperCase() + w.slice(1)).join(' ');
+function prettyName(s) {
+  if (!s) return '';
+  return s.toLowerCase().split('_').map(w => w ? w[0].toUpperCase() + w.slice(1) : '').join(' ');
+}
+
+const ROMAN = ['', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X'];
+
+function prettyVariant(material, variant) {
+  if (!variant) return '';
+  if (material === 'ENCHANTED_BOOK') {
+    // "SHARPNESS_5" → "Sharpness V"
+    const m = variant.match(/^(.+)_(\d+)$/);
+    if (m) {
+      const lvl = parseInt(m[2], 10);
+      const roman = (lvl >= 1 && lvl < ROMAN.length) ? ROMAN[lvl] : m[2];
+      return `${prettyName(m[1])} ${roman}`;
+    }
+  }
+  // Potions : STRONG_X → "X II", LONG_X → "X prolongée"
+  if (variant.startsWith('STRONG_')) return `${prettyName(variant.slice(7))} II`;
+  if (variant.startsWith('LONG_')) return `${prettyName(variant.slice(5))} prolongée`;
+  return prettyName(variant);
+}
+
+function prettyItem(targetStr) {
+  const { material, variant } = parseTarget(targetStr);
+  const base = prettyName(material);
+  if (!variant) return base;
+  return `${base} (${prettyVariant(material, variant)})`;
 }
 
 function formatDuration(ms) {
