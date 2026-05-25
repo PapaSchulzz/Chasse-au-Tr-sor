@@ -80,14 +80,16 @@ let liveTickHandle = null;
 
 function renderLiveBanner(live) {
   const banner = document.getElementById('live-banner');
-  if (!live || !live.start) {
+  if (!live || (!live.start && !live.startAt)) {
     banner.hidden = true;
     banner.innerHTML = '';
+    banner.classList.remove('pending-state');
     if (liveTickHandle) { clearInterval(liveTickHandle); liveTickHandle = null; }
     return;
   }
   banner.hidden = false;
-  const startMs = new Date(live.start).getTime();
+  const isPending = live.status === 'pending' || (!live.start && live.startAt);
+  banner.classList.toggle('pending-state', isPending);
   const items = Array.isArray(live.items) ? live.items : [];
   const itemsHtml = items.map(i =>
     `<img src="${itemImageUrl(i)}" alt="${escapeHtml(i)}" title="${escapeHtml(prettyItem(i))}" data-fallback="${itemImageFallback(i)}" onerror="if(this.dataset.fallback){this.src=this.dataset.fallback;this.dataset.fallback='';}else{this.style.display='none';}" />`
@@ -95,15 +97,29 @@ function renderLiveBanner(live) {
   const playerCount = live.playerCount != null ? live.playerCount : '?';
 
   const render = () => {
-    const elapsed = Math.max(0, Date.now() - startMs);
-    banner.innerHTML = `
-      <div class="live-pulse" aria-hidden="true"></div>
-      <div class="live-main">
-        <div class="live-label">PARTIE EN COURS</div>
-        <div class="live-meta">${items.length} item${items.length > 1 ? 's' : ''} · ${playerCount} joueur${playerCount > 1 ? 's' : ''} · ${formatDuration(elapsed)}</div>
-      </div>
-      <div class="live-items">${itemsHtml}</div>
-    `;
+    if (isPending) {
+      const startAtMs = new Date(live.startAt).getTime();
+      const remaining = Math.max(0, startAtMs - Date.now());
+      banner.innerHTML = `
+        <div class="live-pulse pending" aria-hidden="true"></div>
+        <div class="live-main">
+          <div class="live-label">DÉMARRAGE IMMINENT</div>
+          <div class="live-meta">${items.length} item${items.length > 1 ? 's' : ''} · ${playerCount} joueur${playerCount > 1 ? 's' : ''} · démarre dans ${formatDuration(remaining)}</div>
+        </div>
+        <div class="live-items">${itemsHtml}</div>
+      `;
+    } else {
+      const startMs = new Date(live.start).getTime();
+      const elapsed = Math.max(0, Date.now() - startMs);
+      banner.innerHTML = `
+        <div class="live-pulse" aria-hidden="true"></div>
+        <div class="live-main">
+          <div class="live-label">PARTIE EN COURS</div>
+          <div class="live-meta">${items.length} item${items.length > 1 ? 's' : ''} · ${playerCount} joueur${playerCount > 1 ? 's' : ''} · ${formatDuration(elapsed)}</div>
+        </div>
+        <div class="live-items">${itemsHtml}</div>
+      `;
+    }
   };
   render();
   if (liveTickHandle) clearInterval(liveTickHandle);
