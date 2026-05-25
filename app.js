@@ -314,6 +314,8 @@ function renderDetail(g) {
 
     ${podiumHtml ? `<h3>Podium</h3><div class="podium">${podiumHtml}</div>` : ''}
 
+    ${renderTimeline(g)}
+
     <h3>Classement</h3>
     <table class="players-table">
       <thead>
@@ -321,6 +323,86 @@ function renderDetail(g) {
       </thead>
       <tbody>${playersHtml}</tbody>
     </table>
+  `;
+}
+
+// Couleur stable par joueur (HSL dérivé d'un hash du pseudo) — pour la timeline.
+function playerColor(name) {
+  let h = 0;
+  const s = String(name || '');
+  for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) | 0;
+  const hue = Math.abs(h) % 360;
+  return `hsl(${hue} 70% 60%)`;
+}
+
+function formatTimeShort(ms) {
+  const s = Math.floor(ms / 1000);
+  const m = Math.floor(s / 60);
+  const r = s % 60;
+  return m > 0
+    ? `${m}m ${String(r).padStart(2, '0')}s`
+    : `${r}s`;
+}
+
+function renderTimeline(g) {
+  const events = Array.isArray(g.events) ? g.events : [];
+  if (events.length === 0) return '';
+  // Tri chrono + position relative sur la durée de la partie.
+  const sorted = [...events].sort((a, b) => (a.tMs || 0) - (b.tMs || 0));
+  const total = Math.max(g.durationMs || 0, sorted[sorted.length - 1].tMs || 1, 1);
+
+  // Regroupe par joueur pour la légende.
+  const byPlayer = new Map();
+  for (const e of sorted) {
+    const key = e.uuid || e.name;
+    if (!byPlayer.has(key)) byPlayer.set(key, { name: e.name, count: 0 });
+    byPlayer.get(key).count++;
+  }
+  const legendHtml = [...byPlayer.entries()].map(([key, info]) => `
+    <span class="timeline-legend-item">
+      <span class="timeline-dot" style="background:${playerColor(info.name)}"></span>
+      ${escapeHtml(info.name)} <span class="meta">· ${info.count}</span>
+    </span>
+  `).join('');
+
+  const marksHtml = sorted.map(e => {
+    const pct = Math.min(100, Math.max(0, (e.tMs / total) * 100));
+    const color = playerColor(e.name);
+    const label = `${escapeHtml(e.name)} → ${escapeHtml(prettyItem(e.item))} (${formatTimeShort(e.tMs)})`;
+    return `
+      <div class="timeline-mark" style="left:${pct}%; --player-color:${color}" title="${label}">
+        <div class="timeline-mark-line"></div>
+        <img class="timeline-mark-icon" src="${itemImageUrl(e.item)}" alt="${escapeHtml(e.item)}" data-fallback="${itemImageFallback(e.item)}" onerror="if(this.dataset.fallback){this.src=this.dataset.fallback;this.dataset.fallback='';}else{this.style.display='none';}" />
+      </div>
+    `;
+  }).join('');
+
+  // Liste textuelle sous la frise pour ceux qui ne survolent pas (mobile).
+  const listHtml = sorted.map(e => `
+    <li>
+      <span class="timeline-time">${formatTimeShort(e.tMs)}</span>
+      <span class="timeline-dot" style="background:${playerColor(e.name)}"></span>
+      <strong>${escapeHtml(e.name)}</strong>
+      <span class="meta">a trouvé</span>
+      <img class="timeline-inline-icon" src="${itemImageUrl(e.item)}" alt="${escapeHtml(e.item)}" data-fallback="${itemImageFallback(e.item)}" onerror="if(this.dataset.fallback){this.src=this.dataset.fallback;this.dataset.fallback='';}else{this.style.display='none';}" />
+      <span>${escapeHtml(prettyItem(e.item))}</span>
+    </li>
+  `).join('');
+
+  return `
+    <h3>Replay</h3>
+    <div class="timeline-wrap">
+      <div class="timeline-legend">${legendHtml}</div>
+      <div class="timeline-track">
+        <div class="timeline-axis"></div>
+        ${marksHtml}
+        <div class="timeline-axis-labels">
+          <span>0s</span>
+          <span>${formatTimeShort(total)}</span>
+        </div>
+      </div>
+      <ol class="timeline-list">${listHtml}</ol>
+    </div>
   `;
 }
 
