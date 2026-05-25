@@ -1,0 +1,16 @@
+{
+  "id": "2026-05-25_16-10-09",
+  "start": "2026-05-25T14:10:09.470Z",
+  "end": "2026-05-25T14:42:09.602Z",
+  "durationMs": 1920132,
+  "winner": "K1ngTaco",
+  "items": ["TNT", "FLINT_AND_STEEL", "QUARTZ_BLOCK", "SALMON_BUCKET", "DIAMOND_HOE", "GOLDEN_APPLE", "ENCHANTED_BOOK"],
+  "players": [
+    {"uuid": "b00b96e4-1782-4ca0-a8f7-67a338cc7c9d", "name": "demoiselle_Elise", "winner": false, "found": ["FLINT_AND_STEEL", "SALMON_BUCKET", "TNT"]},
+    {"uuid": "ce37b4ad-89a3-4a1b-9235-b5d615c24bcb", "name": "Ryuwenx2011", "winner": false, "found": ["FLINT_AND_STEEL", "SALMON_BUCKET"]},
+    {"uuid": "ba8e6fda-2f20-407a-b2c8-00b7d3fef842", "name": "halbtini", "winner": false, "found": ["DIAMOND_HOE", "FLINT_AND_STEEL", "GOLDEN_APPLE", "SALMON_BUCKET", "QUARTZ_BLOCK", "TNT"]},
+    {"uuid": "cc38e4ab-8e36-4261-986d-d85a79646069", "name": "K1ngTaco", "winner": true, "found": ["DIAMOND_HOE", "ENCHANTED_BOOK", "FLINT_AND_STEEL", "GOLDEN_APPLE", "SALMON_BUCKET", "QUARTZ_BLOCK", "TNT"]},
+    {"uuid": "e8a1c248-d838-4722-8b90-fd654fd8e7d1", "name": "neanyt", "winner": false, "found": ["DIAMOND_HOE", "FLINT_AND_STEEL", "SALMON_BUCKET", "QUARTZ_BLOCK", "TNT"]},
+    {"uuid": "12cbec2c-3d73-4e57-b259-727963fcd013", "name": "mt_974", "winner": false, "found": ["FLINT_AND_STEEL", "SALMON_BUCKET"]}
+  ]
+}
