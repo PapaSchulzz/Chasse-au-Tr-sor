@@ -1,0 +1,14 @@
+{
+  "id": "2026-05-25_16-44-55",
+  "start": "2026-05-25T14:44:55.870Z",
+  "end": "2026-05-25T15:01:04.131Z",
+  "durationMs": 968261,
+  "winner": "demoiselle_Elise",
+  "items": ["AMETHYST_SHARD"],
+  "players": [
+    {"uuid": "b00b96e4-1782-4ca0-a8f7-67a338cc7c9d", "name": "demoiselle_Elise", "winner": true, "found": ["AMETHYST_SHARD"]},
+    {"uuid": "cc38e4ab-8e36-4261-986d-d85a79646069", "name": "K1ngTaco", "winner": false, "found": []},
+    {"uuid": "e8a1c248-d838-4722-8b90-fd654fd8e7d1", "name": "neanyt", "winner": false, "found": []},
+    {"uuid": "ce37b4ad-89a3-4a1b-9235-b5d615c24bcb", "name": "Ryuwenx2011", "winner": false, "found": []}
+  ]
+}
