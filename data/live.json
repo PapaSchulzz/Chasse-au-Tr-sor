@@ -1,5 +1,6 @@
 {
-  "start": "2026-05-25T12:15:58.544Z",
-  "playerCount": 1,
-  "items": ["DIAMOND"]
+  "status": "pending",
+  "startAt": "2026-05-25T12:26:38.868Z",
+  "playerCount": 0,
+  "items": ["APPLE", "CARROT", "DIAMOND", "EMERALD", "ARROW", "END_CRYSTAL"]
 }
