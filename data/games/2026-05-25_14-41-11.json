@@ -1,0 +1,11 @@
+{
+  "id": "2026-05-25_14-41-11",
+  "start": "2026-05-25T12:41:11.618Z",
+  "end": "2026-05-25T12:45:39.171Z",
+  "durationMs": 267553,
+  "winner": "Papa_Schulz",
+  "items": ["ENCHANTED_BOOK", "TNT", "FLINT_AND_STEEL", "SALMON_BUCKET", "DIAMOND_HOE", "GOLDEN_APPLE", "QUARTZ_BLOCK"],
+  "players": [
+    {"uuid": "ee8f5d97-204e-4fb9-9759-531c7b43f989", "name": "Papa_Schulz", "winner": true, "found": ["DIAMOND_HOE", "ENCHANTED_BOOK", "FLINT_AND_STEEL", "GOLDEN_APPLE", "SALMON_BUCKET", "QUARTZ_BLOCK", "TNT"]}
+  ]
+}
