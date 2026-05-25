@@ -368,6 +368,7 @@ h3 {
 }
 
 /* === LIVE BANNER === */
+.live-banner[hidden] { display: none !important; }
 .live-banner {
   display: grid;
   grid-template-columns: auto 1fr auto;
