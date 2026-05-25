@@ -1,0 +1,11 @@
+{
+  "id": "2026-05-25_02-29-48",
+  "start": "2026-05-25T00:29:48.617Z",
+  "end": "2026-05-25T00:32:54.420Z",
+  "durationMs": 185803,
+  "winner": "Papa_Schulz",
+  "items": ["APPLE"],
+  "players": [
+    {"uuid": "ee8f5d97-204e-4fb9-9759-531c7b43f989", "name": "Papa_Schulz", "winner": true, "found": ["APPLE"]}
+  ]
+}
