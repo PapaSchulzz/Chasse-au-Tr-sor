@@ -66,6 +66,50 @@ async function loadGame(id) {
   return res.json();
 }
 
+async function loadLive() {
+  try {
+    const res = await fetch(`${DATA_BASE}/live.json?t=${Date.now()}`);
+    if (!res.ok) return null;
+    return await res.json();
+  } catch {
+    return null;
+  }
+}
+
+let liveTickHandle = null;
+
+function renderLiveBanner(live) {
+  const banner = document.getElementById('live-banner');
+  if (!live || !live.start) {
+    banner.hidden = true;
+    banner.innerHTML = '';
+    if (liveTickHandle) { clearInterval(liveTickHandle); liveTickHandle = null; }
+    return;
+  }
+  banner.hidden = false;
+  const startMs = new Date(live.start).getTime();
+  const items = Array.isArray(live.items) ? live.items : [];
+  const itemsHtml = items.map(i =>
+    `<img src="${itemImageUrl(i)}" alt="${escapeHtml(i)}" title="${escapeHtml(prettyItem(i))}" data-fallback="${itemImageFallback(i)}" onerror="if(this.dataset.fallback){this.src=this.dataset.fallback;this.dataset.fallback='';}else{this.style.display='none';}" />`
+  ).join('');
+  const playerCount = live.playerCount != null ? live.playerCount : '?';
+
+  const render = () => {
+    const elapsed = Math.max(0, Date.now() - startMs);
+    banner.innerHTML = `
+      <div class="live-pulse" aria-hidden="true"></div>
+      <div class="live-main">
+        <div class="live-label">PARTIE EN COURS</div>
+        <div class="live-meta">${items.length} item${items.length > 1 ? 's' : ''} · ${playerCount} joueur${playerCount > 1 ? 's' : ''} · ${formatDuration(elapsed)}</div>
+      </div>
+      <div class="live-items">${itemsHtml}</div>
+    `;
+  };
+  render();
+  if (liveTickHandle) clearInterval(liveTickHandle);
+  liveTickHandle = setInterval(render, 1000);
+}
+
 function renderStats(games) {
   const bar = document.getElementById('stats-bar');
   if (!games || games.length === 0) {
@@ -153,6 +197,25 @@ function renderDetail(g) {
     return b.found.length - a.found.length;
   });
 
+  // Podium : top 3 (positions 1-2-3). On garde tout le monde dans le tableau pour ne rien cacher.
+  const podiumPlayers = sortedPlayers.slice(0, 3);
+  // Ordre visuel : 2e, 1er, 3e (le 1er au centre, le plus haut)
+  const podiumOrder = [
+    { p: podiumPlayers[1], rank: 2, cls: 'silver' },
+    { p: podiumPlayers[0], rank: 1, cls: 'gold' },
+    { p: podiumPlayers[2], rank: 3, cls: 'bronze' },
+  ].filter(x => x.p);
+  const medalEmoji = { 1: '🥇', 2: '🥈', 3: '🥉' };
+  const podiumHtml = podiumOrder.map(({ p, rank, cls }) => `
+    <div class="podium-slot ${cls} rank-${rank}">
+      <div class="podium-medal">${medalEmoji[rank]}</div>
+      <img class="podium-skin" src="${skinUrl(p)}" alt="" onerror="this.style.visibility='hidden'" />
+      <div class="podium-name">${escapeHtml(p.name)}</div>
+      <div class="podium-score">${p.found.length} / ${g.items.length}</div>
+      <div class="podium-step"><span>${rank}</span></div>
+    </div>
+  `).join('');
+
   const playersHtml = sortedPlayers.map(p => {
     const foundSet = new Set(p.found);
     const itemsCellHtml = g.items.map(i => {
@@ -182,6 +245,8 @@ function renderDetail(g) {
 
     <h3>Items à trouver</h3>
     <div class="items-grid">${itemsHtml}</div>
+
+    ${podiumHtml ? `<h3>Podium</h3><div class="podium">${podiumHtml}</div>` : ''}
 
     <h3>Classement</h3>
     <table class="players-table">
@@ -222,9 +287,26 @@ document.querySelectorAll('.copy-btn').forEach(btn => {
   });
 });
 
-loadIndex()
-  .then(games => { renderStats(games); renderList(games); })
-  .catch(e => {
-    document.getElementById('games-list').innerHTML =
-      `<div class="empty">Erreur de chargement : ${escapeHtml(e.message)}</div>`;
-  });
+let lastIndexSig = '';
+
+async function refreshAll() {
+  try {
+    const [games, live] = await Promise.all([loadIndex(), loadLive()]);
+    const sig = JSON.stringify(games.map(g => g.id));
+    if (sig !== lastIndexSig) {
+      lastIndexSig = sig;
+      renderStats(games);
+      renderList(games);
+    }
+    renderLiveBanner(live);
+  } catch (e) {
+    if (!lastIndexSig) {
+      document.getElementById('games-list').innerHTML =
+        `<div class="empty">Erreur de chargement : ${escapeHtml(e.message)}</div>`;
+    }
+  }
+}
+
+refreshAll();
+// Polling toutes les 30s : capte les nouvelles parties et le statut "en cours" sans recharger la page.
+setInterval(refreshAll, 30000);
