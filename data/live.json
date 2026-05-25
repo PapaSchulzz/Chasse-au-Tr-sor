@@ -1,6 +1,6 @@
 {
-  "status": "pending",
-  "startAt": "2026-05-25T14:10:09.470Z",
-  "playerCount": 0,
+  "status": "running",
+  "start": "2026-05-25T14:10:09.470Z",
+  "playerCount": 7,
   "items": ["TNT", "FLINT_AND_STEEL", "QUARTZ_BLOCK", "SALMON_BUCKET", "DIAMOND_HOE", "GOLDEN_APPLE", "ENCHANTED_BOOK"]
 }
