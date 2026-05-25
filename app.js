@@ -78,13 +78,22 @@ async function loadLive() {
 
 let liveTickHandle = null;
 
-function renderLiveBanner(live) {
+function renderLiveBanner(live, games) {
   const banner = document.getElementById('live-banner');
-  if (!live || (!live.start && !live.startAt)) {
+  const hide = () => {
     banner.hidden = true;
     banner.innerHTML = '';
     banner.classList.remove('pending-state');
     if (liveTickHandle) { clearInterval(liveTickHandle); liveTickHandle = null; }
+  };
+  if (!live || (!live.start && !live.startAt)) {
+    hide();
+    return;
+  }
+  // Garde-fou : si live.json n'a pas été nettoyé côté plugin mais que la partie
+  // figure déjà dans l'historique (même timestamp de début), considérer la partie terminée.
+  if (live.start && Array.isArray(games) && games.some(g => g.start === live.start)) {
+    hide();
     return;
   }
   banner.hidden = false;
@@ -314,7 +323,7 @@ async function refreshAll() {
       renderStats(games);
       renderList(games);
     }
-    renderLiveBanner(live);
+    renderLiveBanner(live, games);
   } catch (e) {
     if (!lastIndexSig) {
       document.getElementById('games-list').innerHTML =
