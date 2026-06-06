@@ -1,0 +1,22 @@
+{
+  "id": "2026-06-06_17-30-18",
+  "start": "2026-06-06T15:30:18.430Z",
+  "end": "2026-06-06T15:34:06.142Z",
+  "durationMs": 227712,
+  "winner": "OhMatronux",
+  "items": ["WATER_BUCKET", "LAVA_BUCKET", "SALMON"],
+  "players": [
+    {"uuid": "fa66c5a4-6956-4319-b129-df18744f1a99", "name": "Jerimyx", "winner": false, "found": []},
+    {"uuid": "ed9a61e9-4dd3-41cb-b643-61f19dce6733", "name": "Lougaroc68", "winner": false, "found": ["SALMON", "WATER_BUCKET"]},
+    {"uuid": "f40a16f0-2ce9-43ca-bb75-8575502f9e52", "name": "DracocoMysti", "winner": false, "found": ["SALMON"]},
+    {"uuid": "bffb1b32-55e3-4c03-a006-e602f06cffb3", "name": "OhMatronux", "winner": true, "found": ["SALMON", "LAVA_BUCKET", "WATER_BUCKET"]}
+  ],
+  "events": [
+    {"tMs": 105413, "uuid": "ed9a61e9-4dd3-41cb-b643-61f19dce6733", "name": "Lougaroc68", "item": "WATER_BUCKET"},
+    {"tMs": 138058, "uuid": "ed9a61e9-4dd3-41cb-b643-61f19dce6733", "name": "Lougaroc68", "item": "SALMON"},
+    {"tMs": 165713, "uuid": "f40a16f0-2ce9-43ca-bb75-8575502f9e52", "name": "DracocoMysti", "item": "SALMON"},
+    {"tMs": 174613, "uuid": "bffb1b32-55e3-4c03-a006-e602f06cffb3", "name": "OhMatronux", "item": "WATER_BUCKET"},
+    {"tMs": 218615, "uuid": "bffb1b32-55e3-4c03-a006-e602f06cffb3", "name": "OhMatronux", "item": "LAVA_BUCKET"},
+    {"tMs": 227712, "uuid": "bffb1b32-55e3-4c03-a006-e602f06cffb3", "name": "OhMatronux", "item": "SALMON"}
+  ]
+}
