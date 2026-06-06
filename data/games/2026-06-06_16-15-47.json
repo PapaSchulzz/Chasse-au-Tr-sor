@@ -1,0 +1,39 @@
+{
+  "id": "2026-06-06_16-15-47",
+  "start": "2026-06-06T14:15:47.256Z",
+  "end": "2026-06-06T15:22:54.795Z",
+  "durationMs": 4027539,
+  "winner": "OhMatronux",
+  "items": ["ENCHANTED_BOOK:SHARPNESS_3", "POTION:HEALING", "GHAST_TEAR", "ALLIUM", "GOLDEN_APPLE"],
+  "players": [
+    {"uuid": "ed9a61e9-4dd3-41cb-b643-61f19dce6733", "name": "Lougaroc68", "winner": false, "found": ["GOLDEN_APPLE", "ENCHANTED_BOOK:SHARPNESS_3"]},
+    {"uuid": "fa66c5a4-6956-4319-b129-df18744f1a99", "name": "Jerimyx", "winner": false, "found": ["GHAST_TEAR", "POTION:HEALING"]},
+    {"uuid": "cc38e4ab-8e36-4261-986d-d85a79646069", "name": "K1ngTaco", "winner": false, "found": ["GOLDEN_APPLE", "GHAST_TEAR", "POTION:HEALING"]},
+    {"uuid": "f40a16f0-2ce9-43ca-bb75-8575502f9e52", "name": "DracocoMysti", "winner": false, "found": []},
+    {"uuid": "790d89fb-0cbb-4c22-bc31-21a8a0187fc6", "name": "M4x_333", "winner": false, "found": ["GHAST_TEAR", "GOLDEN_APPLE"]},
+    {"uuid": "5c40b91b-3fc3-4a13-b13b-fc852d370aca", "name": "Mcross_bow", "winner": false, "found": ["GOLDEN_APPLE", "GHAST_TEAR", "ALLIUM"]},
+    {"uuid": "bffb1b32-55e3-4c03-a006-e602f06cffb3", "name": "OhMatronux", "winner": true, "found": ["GOLDEN_APPLE", "GHAST_TEAR", "ALLIUM", "POTION:HEALING", "ENCHANTED_BOOK:SHARPNESS_3"]},
+    {"uuid": "ee8f5d97-204e-4fb9-9759-531c7b43f989", "name": "Papa_Schulz", "winner": false, "found": ["POTION:HEALING", "ENCHANTED_BOOK:SHARPNESS_3"]}
+  ],
+  "events": [
+    {"tMs": 839895, "uuid": "ed9a61e9-4dd3-41cb-b643-61f19dce6733", "name": "Lougaroc68", "item": "GOLDEN_APPLE"},
+    {"tMs": 1510874, "uuid": "fa66c5a4-6956-4319-b129-df18744f1a99", "name": "Jerimyx", "item": "GHAST_TEAR"},
+    {"tMs": 1610444, "uuid": "cc38e4ab-8e36-4261-986d-d85a79646069", "name": "K1ngTaco", "item": "GOLDEN_APPLE"},
+    {"tMs": 1650022, "uuid": "5c40b91b-3fc3-4a13-b13b-fc852d370aca", "name": "Mcross_bow", "item": "GOLDEN_APPLE"},
+    {"tMs": 1698173, "uuid": "cc38e4ab-8e36-4261-986d-d85a79646069", "name": "K1ngTaco", "item": "GHAST_TEAR"},
+    {"tMs": 1720120, "uuid": "790d89fb-0cbb-4c22-bc31-21a8a0187fc6", "name": "M4x_333", "item": "GHAST_TEAR"},
+    {"tMs": 1967684, "uuid": "bffb1b32-55e3-4c03-a006-e602f06cffb3", "name": "OhMatronux", "item": "GOLDEN_APPLE"},
+    {"tMs": 2039619, "uuid": "bffb1b32-55e3-4c03-a006-e602f06cffb3", "name": "OhMatronux", "item": "POTION:HEALING"},
+    {"tMs": 2374776, "uuid": "5c40b91b-3fc3-4a13-b13b-fc852d370aca", "name": "Mcross_bow", "item": "ALLIUM"},
+    {"tMs": 2523829, "uuid": "ee8f5d97-204e-4fb9-9759-531c7b43f989", "name": "Papa_Schulz", "item": "POTION:HEALING"},
+    {"tMs": 2524181, "uuid": "ee8f5d97-204e-4fb9-9759-531c7b43f989", "name": "Papa_Schulz", "item": "ENCHANTED_BOOK:SHARPNESS_3"},
+    {"tMs": 2660726, "uuid": "bffb1b32-55e3-4c03-a006-e602f06cffb3", "name": "OhMatronux", "item": "ALLIUM"},
+    {"tMs": 2689629, "uuid": "790d89fb-0cbb-4c22-bc31-21a8a0187fc6", "name": "M4x_333", "item": "GOLDEN_APPLE"},
+    {"tMs": 2899874, "uuid": "fa66c5a4-6956-4319-b129-df18744f1a99", "name": "Jerimyx", "item": "POTION:HEALING"},
+    {"tMs": 3179480, "uuid": "cc38e4ab-8e36-4261-986d-d85a79646069", "name": "K1ngTaco", "item": "POTION:HEALING"},
+    {"tMs": 3391978, "uuid": "bffb1b32-55e3-4c03-a006-e602f06cffb3", "name": "OhMatronux", "item": "GHAST_TEAR"},
+    {"tMs": 3462772, "uuid": "5c40b91b-3fc3-4a13-b13b-fc852d370aca", "name": "Mcross_bow", "item": "GHAST_TEAR"},
+    {"tMs": 3464624, "uuid": "ed9a61e9-4dd3-41cb-b643-61f19dce6733", "name": "Lougaroc68", "item": "ENCHANTED_BOOK:SHARPNESS_3"},
+    {"tMs": 4027539, "uuid": "bffb1b32-55e3-4c03-a006-e602f06cffb3", "name": "OhMatronux", "item": "ENCHANTED_BOOK:SHARPNESS_3"}
+  ]
+}
