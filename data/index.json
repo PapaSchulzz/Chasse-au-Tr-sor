@@ -1,4 +1,5 @@
 [
+  {"id": "2026-06-06_17-39-34", "start": "2026-06-06T15:39:34.280Z", "durationMs": 864010, "winner": "Lougaroc68", "winnerUuid": "ed9a61e9-4dd3-41cb-b643-61f19dce6733", "itemCount": 3, "items": ["COOKED_COD", "COOKED_SALMON", "PUFFERFISH"], "playerCount": 3},
   {"id": "2026-06-06_17-30-18", "start": "2026-06-06T15:30:18.430Z", "durationMs": 227712, "winner": "OhMatronux", "winnerUuid": "bffb1b32-55e3-4c03-a006-e602f06cffb3", "itemCount": 3, "items": ["WATER_BUCKET", "LAVA_BUCKET", "SALMON"], "playerCount": 4},
   {"id": "2026-06-06_16-15-47", "start": "2026-06-06T14:15:47.256Z", "durationMs": 4027539, "winner": "OhMatronux", "winnerUuid": "bffb1b32-55e3-4c03-a006-e602f06cffb3", "itemCount": 5, "items": ["ENCHANTED_BOOK:SHARPNESS_3", "POTION:HEALING", "GHAST_TEAR", "ALLIUM", "GOLDEN_APPLE"], "playerCount": 8},
   {"id": "2026-05-25_16-44-55", "start": "2026-05-25T14:44:55.870Z", "durationMs": 968261, "winner": "demoiselle_Elise", "winnerUuid": "b00b96e4-1782-4ca0-a8f7-67a338cc7c9d", "itemCount": 1, "items": ["AMETHYST_SHARD"], "playerCount": 4},
