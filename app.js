@@ -74,6 +74,160 @@ function itemImageFallback(targetStr) {
   return `${ITEM_IMG_BASE}/blocks/${name}.png`;
 }
 
+// --- Tinted potion rendering --------------------------------------------------
+// minecraft-assets ne fournit que la bouteille vide (`items/potion.png`) et
+// l'overlay du liquide (`items/potion_overlay.png`, blanc). Comme dans le jeu,
+// on teinte le liquide à la couleur de la PotionType puis on superpose la
+// bouteille. Le résultat est mis en cache (data URL) et appliqué via un
+// MutationObserver qui repère les <img> dont l'`alt` matche une potion.
+const POTION_MATERIALS = new Set([
+  'POTION', 'SPLASH_POTION', 'LINGERING_POTION', 'TIPPED_ARROW',
+]);
+
+const POTION_OVERLAY_FILE = {
+  POTION: 'potion_overlay',
+  SPLASH_POTION: 'splash_potion_overlay',
+  LINGERING_POTION: 'lingering_potion_overlay',
+  TIPPED_ARROW: 'tipped_arrow_head',
+};
+
+// Couleurs vanilla (PotionType → liquide). STRONG_/LONG_ retombent sur la base.
+const POTION_COLORS = {
+  WATER: '#385dc6',
+  MUNDANE: '#385dc6',
+  THICK: '#385dc6',
+  AWKWARD: '#385dc6',
+  NIGHT_VISION: '#1f1fa1',
+  INVISIBILITY: '#7f8392',
+  LEAPING: '#22ff4c',
+  FIRE_RESISTANCE: '#e49a3a',
+  SWIFTNESS: '#7cafc6',
+  SLOWNESS: '#5a6c81',
+  TURTLE_MASTER: '#4a8b58',
+  WATER_BREATHING: '#2e5299',
+  HEALING: '#f82423',
+  HARMING: '#430a09',
+  POISON: '#4e9331',
+  REGENERATION: '#cd5cab',
+  STRENGTH: '#932423',
+  WEAKNESS: '#484d48',
+  LUCK: '#339900',
+  SLOW_FALLING: '#f7f8e0',
+  WIND_CHARGED: '#c5c1f5',
+  WEAVING: '#58381d',
+  OOZING: '#99ffa6',
+  INFESTED: '#8c91a7',
+};
+
+function potionBaseVariant(variant) {
+  if (!variant) return null;
+  let v = String(variant).toUpperCase();
+  if (v.startsWith('STRONG_')) v = v.slice(7);
+  if (v.startsWith('LONG_')) v = v.slice(5);
+  return v;
+}
+
+function potionColorFor(variant) {
+  const v = potionBaseVariant(variant);
+  return v ? (POTION_COLORS[v] || null) : null;
+}
+
+const _imgLoadCache = new Map();
+function _loadImageOnce(url) {
+  if (_imgLoadCache.has(url)) return _imgLoadCache.get(url);
+  const p = new Promise((resolve, reject) => {
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.onload = () => resolve(img);
+    img.onerror = () => reject(new Error('load failed: ' + url));
+    img.src = url;
+  });
+  _imgLoadCache.set(url, p);
+  return p;
+}
+
+const _potionDataUrlCache = new Map(); // key: material|color → dataURL
+const _potionPending = new Map();
+
+async function getTintedPotionDataUrl(material, color) {
+  const key = material + '|' + color;
+  if (_potionDataUrlCache.has(key)) return _potionDataUrlCache.get(key);
+  if (_potionPending.has(key)) return _potionPending.get(key);
+  const promise = (async () => {
+    const overlayName = POTION_OVERLAY_FILE[material];
+    const bottleName = material.toLowerCase();
+    const overlayUrl = `${ITEM_IMG_BASE}/items/${overlayName}.png`;
+    const bottleUrl = `${ITEM_IMG_BASE}/items/${bottleName}.png`;
+    const [liquid, glass] = await Promise.all([
+      _loadImageOnce(overlayUrl),
+      _loadImageOnce(bottleUrl),
+    ]);
+    const w = liquid.width || 16;
+    const h = liquid.height || 16;
+    const cv = document.createElement('canvas');
+    cv.width = w; cv.height = h;
+    const ctx = cv.getContext('2d');
+    ctx.imageSmoothingEnabled = false;
+    // 1) liquide blanc
+    ctx.drawImage(liquid, 0, 0, w, h);
+    // 2) teinte : remplir seulement les pixels opaques du liquide
+    ctx.globalCompositeOperation = 'source-in';
+    ctx.fillStyle = color;
+    ctx.fillRect(0, 0, w, h);
+    // 3) bouteille en verre par-dessus
+    ctx.globalCompositeOperation = 'source-over';
+    ctx.drawImage(glass, 0, 0, w, h);
+    const url = cv.toDataURL('image/png');
+    _potionDataUrlCache.set(key, url);
+    return url;
+  })();
+  _potionPending.set(key, promise);
+  try {
+    const url = await promise;
+    return url;
+  } finally {
+    _potionPending.delete(key);
+  }
+}
+
+function _applyPotionTint(img) {
+  if (!img || img.tagName !== 'IMG') return;
+  if (img.dataset.potionTinted) return;
+  const alt = img.getAttribute('alt') || '';
+  const { material, variant } = parseTarget(alt);
+  if (!POTION_MATERIALS.has(material)) return;
+  const color = potionColorFor(variant);
+  if (!color) return;
+  img.dataset.potionTinted = '1';
+  // On efface le fallback : sinon, si la requête initiale échoue, onerror
+  // remplacerait notre future data URL par la texture de bloc.
+  img.removeAttribute('data-fallback');
+  img.removeAttribute('onerror');
+  getTintedPotionDataUrl(material, color).then(url => {
+    if (url) img.src = url;
+  }).catch(() => {});
+}
+
+function _scanForPotions(root) {
+  if (!root) return;
+  if (root.nodeType === 1) {
+    if (root.tagName === 'IMG') _applyPotionTint(root);
+    if (root.querySelectorAll) {
+      root.querySelectorAll('img').forEach(_applyPotionTint);
+    }
+  }
+}
+
+function setupPotionTinter() {
+  _scanForPotions(document.body);
+  const obs = new MutationObserver(muts => {
+    for (const m of muts) {
+      m.addedNodes.forEach(_scanForPotions);
+    }
+  });
+  obs.observe(document.body, { childList: true, subtree: true });
+}
+
 function skinUrl(playerNameOrObj) {
   // Préférer l'UUID si dispo : mc-heads.net cache parfois une vieille version par pseudo
   // (skin changé, pseudo recyclé…). L'UUID renvoie toujours le skin actuel.
@@ -492,6 +646,7 @@ async function refreshAll() {
   }
 }
 
+setupPotionTinter();
 refreshAll();
 // Polling toutes les 30s : capte les nouvelles parties et le statut "en cours" sans recharger la page.
 setInterval(refreshAll, 30000);
