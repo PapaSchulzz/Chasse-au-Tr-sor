@@ -1,0 +1,22 @@
+{
+  "id": "2026-06-06_17-39-34",
+  "start": "2026-06-06T15:39:34.280Z",
+  "end": "2026-06-06T15:53:58.290Z",
+  "durationMs": 864010,
+  "winner": "Lougaroc68",
+  "items": ["COOKED_COD", "COOKED_SALMON", "PUFFERFISH"],
+  "players": [
+    {"uuid": "ed9a61e9-4dd3-41cb-b643-61f19dce6733", "name": "Lougaroc68", "winner": true, "found": ["COOKED_SALMON", "COOKED_COD", "PUFFERFISH"]},
+    {"uuid": "f40a16f0-2ce9-43ca-bb75-8575502f9e52", "name": "DracocoMysti", "winner": false, "found": ["COOKED_SALMON", "COOKED_COD"]},
+    {"uuid": "fa66c5a4-6956-4319-b129-df18744f1a99", "name": "Jerimyx", "winner": false, "found": ["COOKED_SALMON", "COOKED_COD"]}
+  ],
+  "events": [
+    {"tMs": 240472, "uuid": "f40a16f0-2ce9-43ca-bb75-8575502f9e52", "name": "DracocoMysti", "item": "COOKED_SALMON"},
+    {"tMs": 247587, "uuid": "fa66c5a4-6956-4319-b129-df18744f1a99", "name": "Jerimyx", "item": "COOKED_COD"},
+    {"tMs": 380940, "uuid": "fa66c5a4-6956-4319-b129-df18744f1a99", "name": "Jerimyx", "item": "COOKED_SALMON"},
+    {"tMs": 641748, "uuid": "f40a16f0-2ce9-43ca-bb75-8575502f9e52", "name": "DracocoMysti", "item": "COOKED_COD"},
+    {"tMs": 858911, "uuid": "ed9a61e9-4dd3-41cb-b643-61f19dce6733", "name": "Lougaroc68", "item": "PUFFERFISH"},
+    {"tMs": 863860, "uuid": "ed9a61e9-4dd3-41cb-b643-61f19dce6733", "name": "Lougaroc68", "item": "COOKED_SALMON"},
+    {"tMs": 864010, "uuid": "ed9a61e9-4dd3-41cb-b643-61f19dce6733", "name": "Lougaroc68", "item": "COOKED_COD"}
+  ]
+}
